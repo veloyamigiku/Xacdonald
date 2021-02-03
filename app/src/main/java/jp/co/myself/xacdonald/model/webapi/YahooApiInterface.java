@@ -13,7 +13,7 @@ public interface YahooApiInterface {
             @Query("condition") String condition,
             @Query("genre_category_id") int genreCategoryId,
             @Query("image_size") int imageSize,
-            @Query("result") int results,
+            @Query("results") int results,
             @Query("sort") String sort);
 
 }
