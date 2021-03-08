@@ -24,10 +24,21 @@ public class HomeViewModel extends ViewModel {
 
     private CompositeDisposable cd = null;
     private PublishSubject<List<Item>> subject = null;
+    private List<Item> items = null;
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items.clear();
+        this.items.addAll(items);
+    }
 
     HomeViewModel() {
         cd = new CompositeDisposable();
         subject = PublishSubject.create();
+        items = new ArrayList<>();
     }
 
     public Observable<List<Item>> searchItemForHome() {
