@@ -43,7 +43,7 @@ public class WebApiUtils {
                 YAHOO_API_APP_ID,
                 "new",
                 50521,
-                76,
+                300,
                 4,
                 "-score");
 
