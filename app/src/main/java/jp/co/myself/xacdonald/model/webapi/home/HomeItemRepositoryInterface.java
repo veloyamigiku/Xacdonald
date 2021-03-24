@@ -1,14 +1,13 @@
-package jp.co.myself.xacdonald.model.webapi;
+package jp.co.myself.xacdonald.model.webapi.home;
 
 import io.reactivex.Observable;
-import jp.co.myself.xacdonald.model.webapi.home.ItemSearchResult;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface YahooApiInterface {
+public interface HomeItemRepositoryInterface {
 
     @GET("ShoppingWebService/V3/itemSearch")
-    Observable<ItemSearchResult> itemSearchForHome(
+    Observable<ItemSearchResult> searchHomeitem(
             @Query("appid") String appID,
             @Query("condition") String condition,
             @Query("genre_category_id") int genreCategoryId,
