@@ -16,8 +16,8 @@ import jp.co.myself.xacdonald.model.view.home.HighScoreItem;
 import jp.co.myself.xacdonald.model.view.home.HighScoreItemSet;
 import jp.co.myself.xacdonald.model.view.home.Item;
 import jp.co.myself.xacdonald.model.view.home.LowPriceItem;
-import jp.co.myself.xacdonald.model.webapi.WebApiUtils;
 import jp.co.myself.xacdonald.model.webapi.home.Hit;
+import jp.co.myself.xacdonald.model.webapi.home.HomeRepository;
 import jp.co.myself.xacdonald.model.webapi.home.ItemSearchResult;
 
 public class HomeViewModel extends ViewModel {
@@ -43,8 +43,8 @@ public class HomeViewModel extends ViewModel {
 
     public Observable<List<Item>> searchItemForHome() {
 
-        Observable<ItemSearchResult> lowPriceItemSearchResultObs = WebApiUtils.getLowPriceItemForHome();
-        Observable<ItemSearchResult> highScoreItemSearchResultObs = WebApiUtils.getHighScoreItemForHome();
+        Observable<ItemSearchResult> lowPriceItemSearchResultObs = HomeRepository.getLowPriceItemForHome();
+        Observable<ItemSearchResult> highScoreItemSearchResultObs = HomeRepository.getHighScoreItemForHome();
         Observable<List<Item>> result =
                 Observable.zip(lowPriceItemSearchResultObs.subscribeOn(Schedulers.io()), highScoreItemSearchResultObs.subscribeOn(Schedulers.io()), new BiFunction<ItemSearchResult, ItemSearchResult, List<Item>>() {
                     @NonNull
