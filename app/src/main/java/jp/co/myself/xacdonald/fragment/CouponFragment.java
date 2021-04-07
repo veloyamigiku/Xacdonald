@@ -15,15 +15,26 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import jp.co.myself.xacdonald.model.webapi.common.WebAPIConstant;
+
 public class CouponFragment extends Fragment {
 
     private static final String[] COUPON_CATEGORY_LIST = {
-            "PS5",
-            "XBox SeriesX/S",
-            "PS4",
-            "XBox One",
-            "Nintendo Switch",
-            "PS3"
+            WebAPIConstant.CATEGORY_PS5,
+            WebAPIConstant.CATEGORY_XBOX_SERIES_X_S,
+            WebAPIConstant.CATEGORY_PS4,
+            WebAPIConstant.CATEGORY_XBOX_ONE,
+            WebAPIConstant.CATEGORY_SW,
+            WebAPIConstant.CATEGORY_PS3
+    };
+
+    private static final Integer[] COUPON_CATEGORY_ID_LIST = {
+            WebAPIConstant.CATEGORY_ID_PS5,
+            WebAPIConstant.CATEGORY_ID_XBOX_SERIES_X_S,
+            WebAPIConstant.CATEGORY_ID_PS4,
+            WebAPIConstant.CATEGORY_ID_XBOX_ONE,
+            WebAPIConstant.CATEGORY_ID_SW,
+            WebAPIConstant.CATEGORY_ID_PS3
     };
 
     public CouponFragment() {
@@ -83,18 +94,19 @@ public class CouponFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return CouponCategoryFragment.newInstance();
+                return CouponCategoryFragment.newInstance(COUPON_CATEGORY_ID_LIST[position]);
             }
 
             @Override
             public int getItemCount() {
-                return COUPON_CATEGORY_LIST.length;
+                return COUPON_CATEGORY_ID_LIST.length;
             }
         };
 
         ViewPager2 vp = new ViewPager2(getContext());
         vp.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         vp.setAdapter(adapter);
+        vp.setOffscreenPageLimit(COUPON_CATEGORY_LIST.length - 1);
         vp.setId(View.generateViewId());
         cl.addView(vp);
         ConstraintSet vpCs = new ConstraintSet();
