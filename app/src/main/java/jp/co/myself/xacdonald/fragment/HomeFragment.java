@@ -25,10 +25,6 @@ public class HomeFragment extends Fragment {
 
     private CompositeDisposable cd = null;
 
-    private HomeViewModel hvm = null;
-
-    private static final int ID = View.generateViewId();
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -44,52 +40,17 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {}
-
         cd = new CompositeDisposable();
-
-        hvm = new ViewModelProvider(this, new HomeViewModelFactory()).get(HomeViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (savedInstanceState != null) {
-            return null;
-        }
-
         ConstraintLayout cl = new ConstraintLayout(getContext());
 
-        /*EditText et = new EditText(getContext());
-        et.setId(View.generateViewId());
-        cl.addView(et);
-        ConstraintSet etCs = new ConstraintSet();
-        etCs.constrainWidth(
-                et.getId(),
-                ConstraintSet.MATCH_CONSTRAINT);
-        etCs.constrainHeight(
-                et.getId(),
-                ConstraintSet.WRAP_CONTENT);
-        etCs.connect(
-                et.getId(),
-                ConstraintSet.TOP,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP,
-                0);
-        etCs.connect(
-                et.getId(),
-                ConstraintSet.LEFT,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.LEFT,
-                0);
-        etCs.connect(
-                et.getId(),
-                ConstraintSet.RIGHT,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.RIGHT,
-                0);
-        etCs.applyTo(cl);*/
-
+        HomeViewModel hvm = new ViewModelProvider(this, new HomeViewModelFactory()).get(HomeViewModel.class);
+        
         RecyclerView rv = new RecyclerView(getContext());
         rv.setId(View.generateViewId());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));

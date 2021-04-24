@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Xacdonald</string>
+    <string name="menu_label_home">ホーム</string>
+    <string name="menu_label_coupon">クーポン</string>
 </resources>

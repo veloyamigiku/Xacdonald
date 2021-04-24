@@ -2,37 +2,72 @@ package jp.co.myself.xacdonald.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
-import jp.co.myself.xacdonald.fragment.MainFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Deque;
+
+import jp.co.myself.xacdonald.R;
+import jp.co.myself.xacdonald.viewmodel.MainViewModel;
+import jp.co.myself.xacdonald.viewmodel.MainViewModelFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String MAIN_FRAGMENT_ID = "main";
+    private BottomNavigationView navView = null;
+    private NavController navController = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        FrameLayout fl = new FrameLayout(this);
-        fl.setId(View.generateViewId());
-        setContentView(fl);
+        MainViewModel mvm = new ViewModelProvider(
+                this,
+                new MainViewModelFactory()).get(MainViewModel.class);
 
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(MAIN_FRAGMENT_ID);
-        FragmentTransaction ft = fm.beginTransaction();
-        if (fragment != null) {
-            ft.remove(fragment);
+        navView = findViewById(R.id.nav_view);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                Deque<Integer> destinationIDStack = mvm.getDestinationIDStack();
+                if (destinationIDStack.size() > 0 && destinationIDStack.peek() == destination.getId()) {
+                    return;
+                }
+                destinationIDStack.push(destination.getId());
+            }
+        });
+        NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    public void switchVisibleHide(boolean visible) {
+        if (navView.isShown() && !visible) {
+            navView.setVisibility(View.GONE);
+        } else if (!navView.isShown() && visible) {
+            navView.setVisibility(View.VISIBLE);
         }
-        ft.replace(
-                fl.getId(),
-                MainFragment.newInstance(),
-                MAIN_FRAGMENT_ID);
-        ft.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (navController.getCurrentDestination().getId() != R.id.HomeFragment) {
+            MainViewModel mvm = new ViewModelProvider(
+                    this,
+                    new MainViewModelFactory()).get(MainViewModel.class);
+            Deque<Integer> destinationIDStack = mvm.getDestinationIDStack();
+            destinationIDStack.pop();
+            navController.navigate(destinationIDStack.peek());
+        } else {
+            super.onBackPressed();
+        }
     }
 }

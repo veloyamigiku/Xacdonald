@@ -24,8 +24,6 @@ public class CouponCategoryFragment extends Fragment {
 
     private Integer couponCategoryID = null;
 
-    private CouponViewModel cvm = null;
-
     private CouponRecyclerViewAdapter crva = null;
 
     public CouponCategoryFragment() {
@@ -46,9 +44,6 @@ public class CouponCategoryFragment extends Fragment {
         if (getArguments() != null) {
             couponCategoryID = getArguments().getInt(PARAM_COUPON_CATEGORY_ID);
         }
-        cvm = new ViewModelProvider(
-                this,
-                new CouponViewModelFactory()).get(CouponViewModel.class);
     }
 
     @Override
@@ -57,6 +52,9 @@ public class CouponCategoryFragment extends Fragment {
 
         ConstraintLayout cl = new ConstraintLayout(getActivity());
 
+        CouponViewModel cvm = new ViewModelProvider(
+                this,
+                new CouponViewModelFactory()).get(CouponViewModel.class);
         RecyclerView rv = new RecyclerView(getContext());
         rv.setId(View.generateViewId());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,29 +88,24 @@ public class CouponCategoryFragment extends Fragment {
                 0);
         rvCs.applyTo(cl);
 
+        Log.d(CouponCategoryFragment.class.getSimpleName(), String.valueOf(couponCategoryID));
         return cl;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        CouponViewModel cvm = new ViewModelProvider(
+                this,
+                new CouponViewModelFactory()).get(CouponViewModel.class);
         if (!cvm.isGotFirstCoupon()) {
             cvm
                     .getCoupon(couponCategoryID)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             (res) -> {
-                                Log.d(CouponCategoryFragment.class.getSimpleName(), "ok");
                                 cvm.setCouponList(res);
-                                Log.d(CouponCategoryFragment.class.getSimpleName(), String.valueOf(crva.getItemCount()));
                                 crva.notifyDataSetChanged();
-                            },
-                            (err) -> {
-                                Log.d(CouponCategoryFragment.class.getSimpleName(), "err");
-                            },
-                            () -> {
-                                Log.d(CouponCategoryFragment.class.getSimpleName(), "complete");
                             });
         }
     }

@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -15,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.model.webapi.common.WebAPIConstant;
 
 public class CouponFragment extends Fragment {
@@ -58,37 +57,7 @@ public class CouponFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ConstraintLayout cl = new ConstraintLayout(getContext());
-
-        TabLayout tl = new TabLayout(getContext());
-        tl.setId(View.generateViewId());
-        cl.addView(tl);
-        ConstraintSet tlCs = new ConstraintSet();
-        tlCs.constrainWidth(
-                tl.getId(),
-                ConstraintSet.MATCH_CONSTRAINT);
-        tlCs.constrainHeight(
-                tl.getId(),
-                ConstraintSet.WRAP_CONTENT);
-        tlCs.connect(
-                tl.getId(),
-                ConstraintSet.TOP,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP,
-                0);
-        tlCs.connect(
-                tl.getId(),
-                ConstraintSet.LEFT,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.LEFT,
-                0);
-        tlCs.connect(
-                tl.getId(),
-                ConstraintSet.RIGHT,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.RIGHT,
-                0);
-        tlCs.applyTo(cl);
+        View v = inflater.inflate(R.layout.fragment_coupon, container, false);
 
         FragmentStateAdapter adapter = new FragmentStateAdapter(getActivity()) {
             @NonNull
@@ -103,45 +72,12 @@ public class CouponFragment extends Fragment {
             }
         };
 
-        ViewPager2 vp = new ViewPager2(getContext());
+        ViewPager2 vp = v.findViewById(R.id.coupon_vp);
         vp.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         vp.setAdapter(adapter);
         vp.setOffscreenPageLimit(COUPON_CATEGORY_LIST.length - 1);
-        vp.setId(View.generateViewId());
-        cl.addView(vp);
-        ConstraintSet vpCs = new ConstraintSet();
-        vpCs.constrainWidth(
-                vp.getId(),
-                ConstraintSet.MATCH_CONSTRAINT);
-        vpCs.constrainHeight(
-                vp.getId(),
-                ConstraintSet.MATCH_CONSTRAINT);
-        vpCs.connect(
-                vp.getId(),
-                ConstraintSet.TOP,
-                tl.getId(),
-                ConstraintSet.BOTTOM,
-                0);
-        vpCs.connect(
-                vp.getId(),
-                ConstraintSet.LEFT,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.LEFT,
-                0);
-        vpCs.connect(
-                vp.getId(),
-                ConstraintSet.RIGHT,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.RIGHT,
-                0);
-        vpCs.connect(
-                vp.getId(),
-                ConstraintSet.BOTTOM,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.BOTTOM,
-                0);
-        vpCs.applyTo(cl);
 
+        TabLayout tl = v.findViewById(R.id.coupon_tl);
         new TabLayoutMediator(tl, vp, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -149,6 +85,7 @@ public class CouponFragment extends Fragment {
             }
         }).attach();
 
-        return cl;
+        return v;
     }
+
 }
