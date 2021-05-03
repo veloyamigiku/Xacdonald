@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -23,6 +22,8 @@ import jp.co.myself.xacdonald.view.common.TableViewCreatorResult;
 public class CouponViewCreator {
 
     public static final String ID_NAME = "name";
+
+    public static final String ID_DETAIL = "detail";
 
     public static final String ID_PRICE = "price";
 
@@ -99,14 +100,9 @@ public class CouponViewCreator {
 
         TextView detailTv = new TextView(context);
         detailTv.setId(View.generateViewId());
+        uiIDViewIDMap.put(ID_DETAIL, detailTv.getId());
         detailTv.setText("詳細");
         detailTv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        detailTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "詳細タップ", Toast.LENGTH_LONG).show();
-            }
-        });
         cl.addView(detailTv);
         ConstraintSet detailTvCs = new ConstraintSet();
         detailTvCs.constrainHeight(

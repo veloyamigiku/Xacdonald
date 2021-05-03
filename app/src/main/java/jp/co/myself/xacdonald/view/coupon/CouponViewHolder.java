@@ -13,6 +13,7 @@ public class CouponViewHolder extends RecyclerView.ViewHolder {
 
     ImageView imgIv;
     TextView nameTv;
+    TextView detailTv;
     TextView priceTv;
 
     public CouponViewHolder(@NonNull View itemView, Map<String, Integer> uiIDResIDMap) {
@@ -20,6 +21,7 @@ public class CouponViewHolder extends RecyclerView.ViewHolder {
 
         imgIv = itemView.findViewById(uiIDResIDMap.get(CouponViewCreator.ID_IMG));
         nameTv = itemView.findViewById(uiIDResIDMap.get(CouponViewCreator.ID_NAME));
+        detailTv = itemView.findViewById(uiIDResIDMap.get(CouponViewCreator.ID_DETAIL));
         priceTv = itemView.findViewById(uiIDResIDMap.get(CouponViewCreator.ID_PRICE));
 
     }

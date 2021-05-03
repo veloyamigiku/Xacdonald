@@ -1,5 +1,6 @@
 package jp.co.myself.xacdonald.view.coupon;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,12 @@ public class CouponRecyclerViewAdapter extends RecyclerView.Adapter {
             case ITEM_VIEW_TYPE_COUPON:
                 TableViewCreatorResult couponVcResult = CouponViewCreator.create(parent.getContext(), parent.getWidth());
                 CouponViewHolder couponVh = new CouponViewHolder(couponVcResult.getV(), couponVcResult.getUiIdViewIdMap());
+                couponVh.detailTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onCouponDetailClicked(couponVh.getAdapterPosition());
+                    }
+                });
                 return couponVh;
             default:
                 throw new RuntimeException(CouponRecyclerViewAdapter.class.getSimpleName() + ":条件分岐の実装に問題があります。");
@@ -70,5 +77,7 @@ public class CouponRecyclerViewAdapter extends RecyclerView.Adapter {
             throw new RuntimeException(CouponRecyclerViewAdapter.class.getSimpleName() + ":条件分岐の実装に問題があります。");
         }
     }
+
+    protected void onCouponDetailClicked(int couponIndex) {}
 
 }

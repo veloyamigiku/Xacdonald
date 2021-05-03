@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import jp.co.myself.xacdonald.model.view.coupon.CouponData;
 import jp.co.myself.xacdonald.view.coupon.CouponRecyclerViewAdapter;
 import jp.co.myself.xacdonald.viewmodel.CouponViewModel;
 import jp.co.myself.xacdonald.viewmodel.CouponViewModelFactory;
@@ -58,7 +60,18 @@ public class CouponCategoryFragment extends Fragment {
         RecyclerView rv = new RecyclerView(getContext());
         rv.setId(View.generateViewId());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        crva = new CouponRecyclerViewAdapter(cvm.getCouponList());
+        crva = new CouponRecyclerViewAdapter(cvm.getCouponList()) {
+            @Override
+            protected void onCouponDetailClicked(int couponIndex) {
+                super.onCouponDetailClicked(couponIndex);
+                CouponData couponData = (CouponData) cvm.getCouponList().get(couponIndex);
+                DialogFragment dialogFragment = new CouponCategoryDialogFragment(
+                        couponData.getName(),
+                        couponData.getDescription());
+                dialogFragment.show(
+                        getParentFragmentManager(), "my_dialog");
+            }
+        };
         rv.setAdapter(crva);
         cl.addView(rv);
         ConstraintSet rvCs = new ConstraintSet();
