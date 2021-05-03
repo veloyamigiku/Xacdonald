@@ -65,7 +65,7 @@ public class CouponCategoryFragment extends Fragment {
             protected void onCouponDetailClicked(int couponIndex) {
                 super.onCouponDetailClicked(couponIndex);
                 CouponData couponData = (CouponData) cvm.getCouponList().get(couponIndex);
-                DialogFragment dialogFragment = new CouponCategoryDialogFragment(
+                DialogFragment dialogFragment = CouponCategoryDialogFragment.newInstance(
                         couponData.getName(),
                         couponData.getDescription());
                 dialogFragment.show(

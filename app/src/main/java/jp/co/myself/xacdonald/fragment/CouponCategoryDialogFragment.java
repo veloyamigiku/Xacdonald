@@ -17,15 +17,32 @@ import androidx.fragment.app.DialogFragment;
 
 public class CouponCategoryDialogFragment extends DialogFragment {
 
+    private static final String PARAM_COUPON_DIALOG_NAME = "name";
+
+    private static final String PARAM_COUPON_DIALOG_DETAIL = "detail";
+
     private String name;
 
     private String detail;
 
     public CouponCategoryDialogFragment() {}
 
-    public CouponCategoryDialogFragment(String name, String detail) {
-        this.name = name;
-        this.detail = detail;
+    public static CouponCategoryDialogFragment newInstance(String name, String detail) {
+        CouponCategoryDialogFragment fragment = new CouponCategoryDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(PARAM_COUPON_DIALOG_NAME, name);
+        args.putString(PARAM_COUPON_DIALOG_DETAIL, detail);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            name = getArguments().getString(PARAM_COUPON_DIALOG_NAME);
+            detail = getArguments().getString(PARAM_COUPON_DIALOG_DETAIL);
+        }
     }
 
     @NonNull
