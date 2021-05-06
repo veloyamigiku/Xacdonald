@@ -12,5 +12,9 @@
         android:id="@+id/CouponFragment"
         android:name="jp.co.myself.xacdonald.fragment.CouponFragment"
         android:label="CouponFragment" />
+    <custom_fragment
+        android:id="@+id/MenuFragment"
+        android:name="jp.co.myself.xacdonald.fragment.MenuFragment"
+        android:label="MenuFragment" />
 
 </navigation>
