@@ -1,6 +1,6 @@
 package jp.co.myself.xacdonald.model.view.menu;
 
-public class MenuItem {
+public class MenuItem extends MenuBase {
 
     private String name;
 

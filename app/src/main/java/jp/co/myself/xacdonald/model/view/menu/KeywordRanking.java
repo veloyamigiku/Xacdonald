@@ -1,6 +1,6 @@
 package jp.co.myself.xacdonald.model.view.menu;
 
-public class KeywordRanking {
+public class KeywordRanking extends MenuBase {
 
     private String keyword;
 

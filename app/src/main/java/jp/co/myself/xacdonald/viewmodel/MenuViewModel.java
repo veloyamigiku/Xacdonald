@@ -1,7 +1,5 @@
 package jp.co.myself.xacdonald.viewmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
@@ -11,6 +9,7 @@ import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import jp.co.myself.xacdonald.model.view.menu.KeywordRanking;
+import jp.co.myself.xacdonald.model.view.menu.MenuBase;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.model.view.menu.MenuItemWithKeywordRanking;
 import jp.co.myself.xacdonald.model.webapi.item.ItemHit;
@@ -23,8 +22,32 @@ public class MenuViewModel extends ViewModel {
 
     private boolean gotFirstMenu;
 
+    private List<MenuBase> menuBaseList;
+
     public MenuViewModel() {
         this.gotFirstMenu = false;
+        this.menuBaseList = new ArrayList<>();
+    }
+
+    public List<MenuBase> getMenuBaseList() {
+        return menuBaseList;
+    }
+
+    public void setMenuBaseList(List<MenuItemWithKeywordRanking> menuItemWithKeywordRankingList) {
+        this.menuBaseList.clear();
+        this.menuBaseList.addAll(fromMenuItemWithKeywordRankingToMenuBaseList(menuItemWithKeywordRankingList));
+    }
+
+    private List<MenuBase> fromMenuItemWithKeywordRankingToMenuBaseList(List<MenuItemWithKeywordRanking> menuItemWithKeywordRankingList) {
+        List<MenuBase> menuBaseList = new ArrayList<>();
+        for (MenuItemWithKeywordRanking miwkr : menuItemWithKeywordRankingList) {
+            KeywordRanking keywordRanking = miwkr.getKeywordRanking();
+            menuBaseList.add(keywordRanking);
+            for (MenuItem menuItem : miwkr.getMenuItemList()) {
+                menuBaseList.add(menuItem);
+            }
+        }
+        return menuBaseList;
     }
 
     public Observable<List<MenuItemWithKeywordRanking>> getMenuItem(int categoryID) {
@@ -81,6 +104,7 @@ public class MenuViewModel extends ViewModel {
                         (menuItemWithKeywordRanking) -> {
                             subject.onNext(menuItemWithKeywordRanking);
                             subject.onComplete();
+                            gotFirstMenu = true;
                         },
                         (error) -> {
                             subject.onError(error);
