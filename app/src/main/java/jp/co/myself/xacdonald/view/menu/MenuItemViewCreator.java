@@ -65,7 +65,7 @@ public class MenuItemViewCreator {
 
         TextView name = new TextView(context);
         name.setId(View.generateViewId());
-        name.setGravity(Gravity.LEFT);
+        name.setGravity(Gravity.START);
         name.setLines(3);
         name.setEllipsize(TextUtils.TruncateAt.END);
         uiIDViewIDMap.put(ID_NAME, name.getId());

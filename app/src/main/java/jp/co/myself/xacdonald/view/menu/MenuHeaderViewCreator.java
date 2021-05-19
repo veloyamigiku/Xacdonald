@@ -30,7 +30,7 @@ public class MenuHeaderViewCreator {
 
         TextView label = new TextView(context);
         label.setId(View.generateViewId());
-        label.setGravity(Gravity.LEFT);
+        label.setGravity(Gravity.START);
         uiIDViewIDMap.put(ID_LABEL, label.getId());
         cl.addView(label);
         ConstraintSet labelCs = new ConstraintSet();
