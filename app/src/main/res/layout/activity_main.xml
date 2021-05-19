@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_bottom_navigation" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="jp.co.myself.xacdonald.CustomNavHostFragment"
         android:layout_width="0dp"
