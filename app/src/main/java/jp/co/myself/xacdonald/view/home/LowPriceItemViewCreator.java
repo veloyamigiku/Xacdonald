@@ -2,7 +2,6 @@ package jp.co.myself.xacdonald.view.home;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,10 +18,7 @@ public class LowPriceItemViewCreator {
 
     public static final String ID_IMAGE = "Image";
 
-    public static TableViewCreatorResult create(Context context) {
-
-        Point displayRealSizeP = new Point();
-        context.getDisplay().getRealSize(displayRealSizeP);
+    public static TableViewCreatorResult create(Context context, int parentWidth) {
 
         Map<String, Integer> uiIdViewIdMap = new HashMap<>();
         ConstraintLayout cs = new ConstraintLayout(context);
@@ -40,7 +36,7 @@ public class LowPriceItemViewCreator {
         ConstraintSet imageViewCs = new ConstraintSet();
         imageViewCs.constrainHeight(
                 imageView.getId(),
-                displayRealSizeP.x);
+                parentWidth);
         imageViewCs.connect(
                 imageView.getId(),
                 ConstraintSet.TOP,

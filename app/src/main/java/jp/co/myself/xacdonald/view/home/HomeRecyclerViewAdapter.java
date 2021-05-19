@@ -34,7 +34,9 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_LOW_PRICE_ITEM:
-                TableViewCreatorResult lowPriceItemVcResult = LowPriceItemViewCreator.create(parent.getContext());
+                TableViewCreatorResult lowPriceItemVcResult = LowPriceItemViewCreator.create(
+                        parent.getContext(),
+                        parent.getWidth());
                 LowPriceItemViewHolder lowPriceItemVh = new LowPriceItemViewHolder(lowPriceItemVcResult.getV(), lowPriceItemVcResult.getUiIdViewIdMap());
                 return lowPriceItemVh;
             case TYPE_HIGH_SCORE_ITEM:
