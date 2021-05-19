@@ -1,3 +1,5 @@
 package jp.co.myself.xacdonald.model.view.menu;
 
-abstract public class MenuBase {}
+import java.io.Serializable;
+
+abstract public class MenuBase implements Serializable {}

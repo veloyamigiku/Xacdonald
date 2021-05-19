@@ -15,6 +15,19 @@
     <custom_fragment
         android:id="@+id/MenuFragment"
         android:name="jp.co.myself.xacdonald.fragment.MenuFragment"
-        android:label="MenuFragment" />
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_MenuFragment_to_MenuDetailFragment"
+            app:destination="@id/MenuDetailFragment" />
+    </custom_fragment>
+    <custom_fragment
+        android:id="@+id/MenuDetailFragment"
+        android:name="jp.co.myself.xacdonald.fragment.MenuDetailFragment"
+        android:label="MenuDetailFragment" >
+        <argument
+            android:name="menuItem"
+            app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
+    </custom_fragment>
+
 
 </navigation>

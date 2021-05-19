@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,6 +79,8 @@ public class MenuCategoryFragment extends Fragment {
         mrva = new MenuRecyclerViewAdapter(mvm.getMenuBaseList()) {
             @Override
             public void onItemClick(MenuBase menuBase) {
+                MenuFragmentDirections.ActionMenuFragmentToMenuDetailFragment action = MenuFragmentDirections.actionMenuFragmentToMenuDetailFragment((MenuItem) menuBase);
+                Navigation.findNavController(cl).navigate(action);
             }
         };
         rv.setAdapter(mrva);
