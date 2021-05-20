@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -134,6 +135,9 @@ public class MenuDetailFragment extends Fragment {
         infoDetailTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MenuDetailFragmentDirections.ActionMenuDetailFragmentToMenuInfoDetailFragment action =
+                        MenuDetailFragmentDirections.actionMenuDetailFragmentToMenuInfoDetailFragment(menuItem);
+                Navigation.findNavController(v).navigate(action);
             }
         });
         cl.addView(infoDetailTv);

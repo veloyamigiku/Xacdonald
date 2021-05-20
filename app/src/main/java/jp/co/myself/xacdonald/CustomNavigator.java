@@ -16,6 +16,9 @@ import androidx.navigation.fragment.FragmentNavigator;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import jp.co.myself.xacdonald.utils.RemoveFragmentPair;
+import jp.co.myself.xacdonald.utils.RemoveFragmentPairConstant;
+
 @Navigator.Name("custom_fragment")
 public class CustomNavigator extends FragmentNavigator {
 
@@ -62,6 +65,13 @@ public class CustomNavigator extends FragmentNavigator {
                     containerId,
                     fragment,
                     tag);
+        } else {
+            for (RemoveFragmentPair rfp : RemoveFragmentPairConstant.LIST) {
+                if (rfp.getSrcCls().isInstance(currentFragment) && rfp.getDstCls().isInstance(fragment)) {
+                    transaction.remove(currentFragment);
+                    break;
+                }
+            }
         }
         fragment.setArguments(args);
 

@@ -28,7 +28,7 @@ public class MenuItem extends MenuBase {
 
     private int pointPremiumBonusAmount;
 
-    private int pointPremiumBonusTime;
+    private int pointPremiumBonusTimes;
 
     private String sellerName;
 
@@ -67,7 +67,7 @@ public class MenuItem extends MenuBase {
         this.pointPremiumAmount = pointPremiumAmount;
         this.pointPremiumTimes = pointPremiumTimes;
         this.pointPremiumBonusAmount = pointPremiumBonusAmount;
-        this.pointPremiumBonusTime = pointPremiumBonusTimes;
+        this.pointPremiumBonusTimes = pointPremiumBonusTimes;
         this.sellerName = sellerName;
         this.sellerReviewRate = sellerReviewRate;
         this.sellerReviewCount = sellerReviewCount;
@@ -125,8 +125,8 @@ public class MenuItem extends MenuBase {
         return pointPremiumBonusAmount;
     }
 
-    public int getPointPremiumBonusTime() {
-        return pointPremiumBonusTime;
+    public int getPointPremiumBonusTimes() {
+        return pointPremiumBonusTimes;
     }
 
     public String getSellerName() {

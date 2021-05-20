@@ -27,6 +27,17 @@
         <argument
             android:name="menuItem"
             app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
+        <action
+            android:id="@+id/action_MenuDetailFragment_to_MenuInfoDetailFragment"
+            app:destination="@id/MenuInfoDetailFragment" />
+    </custom_fragment>
+    <custom_fragment
+        android:id="@+id/MenuInfoDetailFragment"
+        android:name="jp.co.myself.xacdonald.fragment.MenuInfoDetailFragment"
+        android:label="MenuInfoDetailFragment" >
+        <argument
+            android:name="menuItem"
+            app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
     </custom_fragment>
 
 
