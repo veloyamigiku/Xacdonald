@@ -10,15 +10,27 @@ public class ItemHit {
 
     private String description;
 
+    private ItemReview review;
+
+    private ItemPoint point;
+
+    private ItemSeller seller;
+
     public ItemHit(
             ItemImage exImage,
             String name,
             Integer price,
-            String description) {
+            String description,
+            ItemReview review,
+            ItemPoint point,
+            ItemSeller seller) {
         this.exImage = exImage;
         this.name = name;
         this.price = price;
         this.description = description;
+        this.review = review;
+        this.point = point;
+        this.seller = seller;
     }
 
     public ItemImage getExImage() {
@@ -35,6 +47,18 @@ public class ItemHit {
 
     public String getDescription() {
         return description;
+    }
+
+    public ItemReview getReview() {
+        return review;
+    }
+
+    public ItemPoint getPoint() {
+        return point;
+    }
+
+    public ItemSeller getSeller() {
+        return seller;
     }
 
 }

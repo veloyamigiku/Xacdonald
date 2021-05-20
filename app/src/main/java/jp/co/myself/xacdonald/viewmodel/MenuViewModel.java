@@ -84,7 +84,20 @@ public class MenuViewModel extends ViewModel {
                                                     itemHit.getName(),
                                                     itemHit.getExImage().getUrl(),
                                                     itemHit.getPrice(),
-                                                    itemHit.getDescription()));
+                                                    itemHit.getDescription(),
+                                                    itemHit.getReview().getRate(),
+                                                    itemHit.getReview().getCount(),
+                                                    itemHit.getPoint().getAmount(),
+                                                    itemHit.getPoint().getTimes(),
+                                                    itemHit.getPoint().getBonusAmount(),
+                                                    itemHit.getPoint().getBonusTimes(),
+                                                    itemHit.getPoint().getPremiumAmount(),
+                                                    itemHit.getPoint().getPremiumTimes(),
+                                                    itemHit.getPoint().getPremiumBonusAmount(),
+                                                    itemHit.getPoint().getPremiumBonusTimes(),
+                                                    itemHit.getSeller().getName(),
+                                                    itemHit.getSeller().getReview().getRate(),
+                                                    itemHit.getSeller().getReview().getCount()));
                                         }
                                         RankingData rankingData = iwrdr.getRankingData();
                                         KeywordRanking keywordRanking = new KeywordRanking(
