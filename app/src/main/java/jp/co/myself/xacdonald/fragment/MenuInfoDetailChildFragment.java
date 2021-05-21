@@ -5,10 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import jp.co.myself.xacdonald.R;
-import jp.co.myself.xacdonald.model.view.menu.MenuInfoDetailData;
+import jp.co.myself.xacdonald.model.view.menuinfodetail.MenuInfoDetailData;
+import jp.co.myself.xacdonald.view.menuinfodetail.MenuInfoDetailRecyclerViewAdapter;
 
 public class MenuInfoDetailChildFragment extends Fragment {
 
@@ -39,7 +43,42 @@ public class MenuInfoDetailChildFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu_info_detail_child, container, false);
+
+        ConstraintLayout cl = new ConstraintLayout(getContext());
+
+        RecyclerView rv = new RecyclerView(getContext());
+        rv.setId(View.generateViewId());
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        MenuInfoDetailRecyclerViewAdapter adapter = new MenuInfoDetailRecyclerViewAdapter(menuInfoDetailData.getMenuInfoDetailBaseList());
+        rv.setAdapter(adapter);
+        cl.addView(rv);
+        ConstraintSet rvCs = new ConstraintSet();
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP,
+                0);
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                0);
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                0);
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM,
+                0);
+        rvCs.applyTo(cl);
+
+        return cl;
     }
 }
