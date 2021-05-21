@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.myself.xacdonald.R;
-import jp.co.myself.xacdonald.model.view.menu.MenuInfoDetailContent;
-import jp.co.myself.xacdonald.model.view.menu.MenuInfoDetailData;
-import jp.co.myself.xacdonald.model.view.menu.MenuInfoDetailItem;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
+import jp.co.myself.xacdonald.model.view.menuinfodetail.MenuInfoDetailData;
+import jp.co.myself.xacdonald.model.view.menuinfodetail.MenuInfoDetailHeader;
+import jp.co.myself.xacdonald.model.view.menuinfodetail.MenuInfoDetailItem;
 
 public class MenuInfoDetailFragment extends Fragment {
 
@@ -30,13 +30,6 @@ public class MenuInfoDetailFragment extends Fragment {
 
     public MenuInfoDetailFragment() {
         // Required empty public constructor
-    }
-
-    public static MenuInfoDetailFragment newInstance(List<MenuInfoDetailContent> menuInfoDetailContentList) {
-        MenuInfoDetailFragment fragment = new MenuInfoDetailFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -90,50 +83,32 @@ public class MenuInfoDetailFragment extends Fragment {
         List<MenuInfoDetailData> menuInfoDetailDataListByTab = new ArrayList<>();
         menuInfoDetailDataListByTab.add(new MenuInfoDetailData(new ArrayList(){
             {
-                add(new MenuInfoDetailContent(
-                        "レビュー",
-                        new ArrayList() {
-                            {
-                                add(new MenuInfoDetailItem("レビュー平均", String.valueOf(menuItem.getReviewRate())));
-                                add(new MenuInfoDetailItem("レビュー件数", String.valueOf(menuItem.getReviewCount())));
-                            }
-                        }
-                ));
+                add(new MenuInfoDetailHeader("レビュー"));
+                add(new MenuInfoDetailItem("レビュー平均", String.valueOf(menuItem.getReviewRate())));
+                add(new MenuInfoDetailItem("レビュー件数", String.valueOf(menuItem.getReviewCount())));
             }
         }));
 
         menuInfoDetailDataListByTab.add(new MenuInfoDetailData(new ArrayList(){
             {
-                add(new MenuInfoDetailContent(
-                        "ポイント",
-                        new ArrayList() {
-                            {
-                                add(new MenuInfoDetailItem("基本ポイント数", String.valueOf(menuItem.getPointAmount())));
-                                add(new MenuInfoDetailItem("基本ポイント倍率", String.valueOf(menuItem.getPointTimes())));
-                                add(new MenuInfoDetailItem("ストアボーナス数", String.valueOf(menuItem.getPointBonusAmount())));
-                                add(new MenuInfoDetailItem("ストアボーナス倍率", String.valueOf(menuItem.getPointBonusTimes())));
-                                add(new MenuInfoDetailItem("プレミアム会員向けの基本ポイント数", String.valueOf(menuItem.getPointPremiumAmount())));
-                                add(new MenuInfoDetailItem("プレミアム会員向けの基本ポイント倍率", String.valueOf(menuItem.getPointPremiumTimes())));
-                                add(new MenuInfoDetailItem("プレミアム会員向けのストアボーナス数", String.valueOf(menuItem.getPointPremiumBonusAmount())));
-                                add(new MenuInfoDetailItem("プレミアム会員向けのストアボーナス倍率", String.valueOf(menuItem.getPointPremiumBonusTimes())));
-                            }
-                        }
-                ));
+                add(new MenuInfoDetailHeader("ポイント"));
+                add(new MenuInfoDetailItem("基本ポイント数", String.valueOf(menuItem.getPointAmount())));
+                add(new MenuInfoDetailItem("基本ポイント倍率", String.valueOf(menuItem.getPointTimes())));
+                add(new MenuInfoDetailItem("ストアボーナス数", String.valueOf(menuItem.getPointBonusAmount())));
+                add(new MenuInfoDetailItem("ストアボーナス倍率", String.valueOf(menuItem.getPointBonusTimes())));
+                add(new MenuInfoDetailItem("プレミアム会員向けの基本ポイント数", String.valueOf(menuItem.getPointPremiumAmount())));
+                add(new MenuInfoDetailItem("プレミアム会員向けの基本ポイント倍率", String.valueOf(menuItem.getPointPremiumTimes())));
+                add(new MenuInfoDetailItem("プレミアム会員向けのストアボーナス数", String.valueOf(menuItem.getPointPremiumBonusAmount())));
+                add(new MenuInfoDetailItem("プレミアム会員向けのストアボーナス倍率", String.valueOf(menuItem.getPointPremiumBonusTimes())));
             }
         }));
 
         menuInfoDetailDataListByTab.add(new MenuInfoDetailData(new ArrayList(){
             {
-                add(new MenuInfoDetailContent(
-                        "ストア",
-                        new ArrayList() {
-                            {
-                                add(new MenuInfoDetailItem("ストア名", String.valueOf(menuItem.getSellerName())));
-                                add(new MenuInfoDetailItem("レビュー平均", String.valueOf(menuItem.getSellerReviewRate())));
-                                add(new MenuInfoDetailItem("レビュー件数", String.valueOf(menuItem.getSellerReviewCount())));
-                            }
-                        }
-                ));
+                add(new MenuInfoDetailHeader("ストア"));
+                add(new MenuInfoDetailItem("ストア名", String.valueOf(menuItem.getSellerName())));
+                add(new MenuInfoDetailItem("レビュー平均", String.valueOf(menuItem.getSellerReviewRate())));
+                add(new MenuInfoDetailItem("レビュー件数", String.valueOf(menuItem.getSellerReviewCount())));
             }
         }));
 
