@@ -1,6 +1,7 @@
 package jp.co.myself.xacdonald.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navView = findViewById(R.id.nav_view);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -64,6 +66,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (!popBackStack()) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (popBackStack()) {
+                return true;
+            } else {
+                finish();
+                return super.onOptionsItemSelected(item);
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean popBackStack() {
         if (navController.getCurrentDestination().getId() != R.id.HomeFragment) {
             MainViewModel mvm = new ViewModelProvider(
                     this,
@@ -71,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
             Deque<Integer> destinationIDStack = mvm.getDestinationIDStack();
             destinationIDStack.pop();
             navController.navigate(destinationIDStack.peek());
+            return true;
         } else {
-            super.onBackPressed();
+            return false;
         }
     }
 }
