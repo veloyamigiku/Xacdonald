@@ -36,10 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 new MainViewModelFactory()).get(MainViewModel.class);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         navView = findViewById(R.id.nav_view);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
@@ -71,17 +67,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (popBackStack()) {
-                return true;
-            } else {
-                finish();
-                return super.onOptionsItemSelected(item);
-            }
-        }
-        return super.onOptionsItemSelected(item);
+    public void popBackStackForFragment() {
+        popBackStack();
     }
 
     private boolean popBackStack() {

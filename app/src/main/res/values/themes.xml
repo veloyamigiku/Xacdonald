@@ -15,19 +15,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- メインタイトルの文字色 -->
-        <item name="android:textColorPrimary">@color/black</item>
-    </style>
-
-    <style name="TextAppearance.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <!-- メインタイトルの文字サイズ  -->
-        <!-- <item name="android:textSize">40sp</item> -->
-    </style>
-
-    <style name="Toolbar" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="android:theme">@style/ToolbarTheme</item>
-        <item name="titleTextAppearance">@style/TextAppearance.Toolbar</item>
-    </style>
-
 </resources>
