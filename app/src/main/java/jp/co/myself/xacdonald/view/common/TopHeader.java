@@ -22,22 +22,28 @@ public class TopHeader extends ConstraintLayout {
         super(context, attrs);
 
         Button leftBtn = new Button(context);
-        leftBtn.setBackgroundResource(R.drawable.ic_account);
         leftBtn.setId(View.generateViewId());
+        leftBtn.setBackgroundColor(Color.TRANSPARENT);
+        leftBtn.setCompoundDrawablePadding(-20);
+        leftBtn.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.account_default), null, null);
+        leftBtn.setText("アカウント");
+        leftBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        leftBtn.setTextColor(Color.parseColor("#A9A9A9"));
+        leftBtn.setPadding(0, 0, 0, 10);
         addView(leftBtn);
         ConstraintSet leftBtnCs = new ConstraintSet();
         leftBtnCs.constrainWidth(
                 leftBtn.getId(),
-                100);
+                DpPx.convertDp2Px(60, getContext()));
         leftBtnCs.constrainHeight(
                 leftBtn.getId(),
-                100);
+                DpPx.convertDp2Px(55, getContext()));
         leftBtnCs.connect(
                 leftBtn.getId(),
                 ConstraintSet.TOP,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.TOP,
-                20);
+                5);
         leftBtnCs.connect(
                 leftBtn.getId(),
                 ConstraintSet.LEFT,
@@ -49,7 +55,7 @@ public class TopHeader extends ConstraintLayout {
                 ConstraintSet.BOTTOM,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.BOTTOM,
-                20);
+                5);
         leftBtnCs.applyTo(this);
 
         Button rightBtn = new Button(context);
@@ -58,9 +64,9 @@ public class TopHeader extends ConstraintLayout {
         rightBtn.setCompoundDrawablePadding(-20);
         rightBtn.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_point_selector), null, null);
         rightBtn.setText("ポイント");
-        rightBtn.setPadding(0, 0, 0, 10);
         rightBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         rightBtn.setTextColor(getResources().getColorStateList(R.color.ic_point_text_selector));
+        rightBtn.setPadding(0, 0, 0, 10);
         addView(rightBtn);
         ConstraintSet rightBtnCs = new ConstraintSet();
         rightBtnCs.constrainWidth(
