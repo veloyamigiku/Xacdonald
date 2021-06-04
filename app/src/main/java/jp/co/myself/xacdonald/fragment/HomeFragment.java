@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import jp.co.myself.xacdonald.view.common.TopHeader;
 import jp.co.myself.xacdonald.view.home.HomeRecyclerViewAdapter;
 import jp.co.myself.xacdonald.viewmodel.HomeViewModel;
 import jp.co.myself.xacdonald.viewmodel.HomeViewModelFactory;
@@ -50,7 +51,37 @@ public class HomeFragment extends Fragment {
         ConstraintLayout cl = new ConstraintLayout(getContext());
 
         HomeViewModel hvm = new ViewModelProvider(this, new HomeViewModelFactory()).get(HomeViewModel.class);
-        
+
+        TopHeader th = new TopHeader(getContext(), null);
+        th.setId(View.generateViewId());
+        cl.addView(th);
+        ConstraintSet thCs = new ConstraintSet();
+        thCs.constrainWidth(
+                th.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        thCs.constrainHeight(
+                th.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP,
+                0);
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                0);
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                0);
+        thCs.applyTo(cl);
+
         RecyclerView rv = new RecyclerView(getContext());
         rv.setId(View.generateViewId());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -68,8 +99,8 @@ public class HomeFragment extends Fragment {
         rvCs.connect(
                 rv.getId(),
                 ConstraintSet.TOP,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP,
+                th.getId(),
+                ConstraintSet.BOTTOM,
                 0);
         rvCs.connect(
                 rv.getId(),
