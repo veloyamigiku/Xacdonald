@@ -227,13 +227,13 @@ public class MenuDetailFragment extends Fragment {
                 ConstraintSet.RIGHT,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.RIGHT,
-                5);
+                50);
         orderBtnCs.connect(
                 orderBtn.getId(),
                 ConstraintSet.BOTTOM,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.BOTTOM,
-                5);
+                50);
         orderBtnCs.applyTo(cl);
 
         return sv;
