@@ -30,11 +30,22 @@
         <action
             android:id="@+id/action_MenuDetailFragment_to_MenuInfoDetailFragment"
             app:destination="@id/MenuInfoDetailFragment" />
+        <action
+            android:id="@+id/action_MenuDetailFragment_to_ShopFragment"
+            app:destination="@id/ShopFragment" />
     </custom_fragment>
     <custom_fragment
         android:id="@+id/MenuInfoDetailFragment"
         android:name="jp.co.myself.xacdonald.fragment.MenuInfoDetailFragment"
         android:label="MenuInfoDetailFragment" >
+        <argument
+            android:name="menuItem"
+            app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
+    </custom_fragment>
+    <custom_fragment
+        android:id="@+id/ShopFragment"
+        android:name="jp.co.myself.xacdonald.fragment.ShopFragment"
+        android:label="ShopFragment" >
         <argument
             android:name="menuItem"
             app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />

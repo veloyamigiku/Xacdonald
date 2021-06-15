@@ -206,6 +206,8 @@ public class MenuDetailFragment extends Fragment {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MenuDetailFragmentDirections.ActionMenuDetailFragmentToShopFragment directions =  MenuDetailFragmentDirections.actionMenuDetailFragmentToShopFragment(menuItem);
+                Navigation.findNavController(v).navigate(directions);
             }
         });
         cl.addView(orderBtn);

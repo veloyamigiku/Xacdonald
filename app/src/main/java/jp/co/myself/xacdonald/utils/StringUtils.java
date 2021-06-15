@@ -7,7 +7,11 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.StyleSpan;
 
+import java.text.NumberFormat;
+
 public class StringUtils {
+
+    private static final NumberFormat NF_PRICE = NumberFormat.getNumberInstance();
 
     public static SpannableStringBuilder getPriceStringWithLabel(
             int unitSizeDp,
@@ -41,7 +45,7 @@ public class StringUtils {
                 ssb.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         start = ssb.length();
-        ssb.append(String.valueOf(price));
+        ssb.append(NF_PRICE.format(price));
         ssb.setSpan(
                 new AbsoluteSizeSpan(priceSizeDp, true),
                 start,
