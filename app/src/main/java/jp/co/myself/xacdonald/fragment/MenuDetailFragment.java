@@ -1,8 +1,12 @@
 package jp.co.myself.xacdonald.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +27,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.utils.StringUtils;
+import jp.co.myself.xacdonald.view.common.TitleHeader;
 
 public class MenuDetailFragment extends Fragment {
 
@@ -56,6 +61,54 @@ public class MenuDetailFragment extends Fragment {
         ConstraintLayout cl = new ConstraintLayout(getContext());
         sv.addView(cl);
 
+        TitleHeader th = new TitleHeader(getContext());
+        th.setId(View.generateViewId());
+        SpannableStringBuilder titleSsb = new SpannableStringBuilder();
+        titleSsb.append(menuItem.getName());
+        titleSsb.setSpan(
+                new AbsoluteSizeSpan(16, true),
+                0,
+                menuItem.getName().length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        titleSsb.setSpan(
+                new StyleSpan(Typeface.BOLD),
+                0,
+                menuItem.getName().length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        th.titleTv.setText(titleSsb);
+        th.setDelegate(new TitleHeader.TitleHeaderDelegate() {
+            @Override
+            public void tapLeftBtn() {
+            }
+        });
+        cl.addView(th);
+        ConstraintSet thCs = new ConstraintSet();
+        thCs.constrainWidth(
+                th.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        thCs.constrainHeight(
+                th.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP,
+                0);
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                0);
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                0);
+        thCs.applyTo(cl);
+
         ImageView imageIv = new ImageView(getContext());
         imageIv.setId(View.generateViewId());
         Glide
@@ -74,8 +127,8 @@ public class MenuDetailFragment extends Fragment {
         imageIvCs.connect(
                 imageIv.getId(),
                 ConstraintSet.TOP,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP,
+                th.getId(),
+                ConstraintSet.BOTTOM,
                 5);
         imageIvCs.connect(
                 imageIv.getId(),
