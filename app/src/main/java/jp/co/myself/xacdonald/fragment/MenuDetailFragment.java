@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import jp.co.myself.xacdonald.R;
+import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.utils.StringUtils;
 import jp.co.myself.xacdonald.view.common.TitleHeader;
@@ -79,6 +80,8 @@ public class MenuDetailFragment extends Fragment {
         th.setDelegate(new TitleHeader.TitleHeaderDelegate() {
             @Override
             public void tapLeftBtn() {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.popBackStackForFragment();
             }
         });
         cl.addView(th);
