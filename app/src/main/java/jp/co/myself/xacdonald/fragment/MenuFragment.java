@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import jp.co.myself.xacdonald.R;
+import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.webapi.common.WebAPIConstant;
 
 public class MenuFragment extends Fragment {
@@ -89,4 +90,14 @@ public class MenuFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.switchVisibleHide(false);
+        }
+    }
+
 }

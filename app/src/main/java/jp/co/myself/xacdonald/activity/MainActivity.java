@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Deque;
 
 import jp.co.myself.xacdonald.R;
+import jp.co.myself.xacdonald.model.view.common.DestinationBundle;
 import jp.co.myself.xacdonald.viewmodel.MainViewModel;
 import jp.co.myself.xacdonald.viewmodel.MainViewModelFactory;
 
@@ -35,26 +36,32 @@ public class MainActivity extends AppCompatActivity {
                 new MainViewModelFactory()).get(MainViewModel.class);
 
         navView = findViewById(R.id.nav_view);
+        navView.setVisibility(mvm.getBvnVisibleState());
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                Deque<Integer> destinationIDStack = mvm.getDestinationIDStack();
-                if (destinationIDStack.size() > 0 && destinationIDStack.peek() == destination.getId()) {
+                Deque<DestinationBundle> destinationBundleStack = mvm.getDestinationBundleStack();
+                if (destinationBundleStack.size() > 0 && destinationBundleStack.peek().getId() == destination.getId()) {
                     return;
                 }
-                destinationIDStack.push(destination.getId());
+                destinationBundleStack.push(new DestinationBundle(destination.getId(), arguments));
             }
         });
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    public void switchVisibleHide(boolean visible) {
-        if (navView.isShown() && !visible) {
+    public void switchVisibleHide(boolean hide) {
+        MainViewModel mvm = new ViewModelProvider(
+                this,
+                new MainViewModelFactory()).get(MainViewModel.class);
+        if (navView.isShown() && hide) {
             navView.setVisibility(View.GONE);
-        } else if (!navView.isShown() && visible) {
+            mvm.setBvnVisibleState(View.GONE);
+        } else if (!navView.isShown() && !hide) {
             navView.setVisibility(View.VISIBLE);
+            mvm.setBvnVisibleState(View.VISIBLE);
         }
     }
 
@@ -74,12 +81,15 @@ public class MainActivity extends AppCompatActivity {
             MainViewModel mvm = new ViewModelProvider(
                     this,
                     new MainViewModelFactory()).get(MainViewModel.class);
-            Deque<Integer> destinationIDStack = mvm.getDestinationIDStack();
-            destinationIDStack.pop();
-            navController.navigate(destinationIDStack.peek());
+            Deque<DestinationBundle> destinationBundleStack = mvm.getDestinationBundleStack();
+            destinationBundleStack.pop();
+            DestinationBundle db = destinationBundleStack.peek();
+            navController.navigate(db.getId(), db.getBundle());
             return true;
         } else {
             return false;
         }
     }
+
+
 }

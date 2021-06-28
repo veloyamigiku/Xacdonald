@@ -57,6 +57,9 @@ public class MenuDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.switchVisibleHide(true);
+
         ScrollView sv = new ScrollView(getContext());
 
         ConstraintLayout cl = new ConstraintLayout(getContext());
@@ -296,4 +299,5 @@ public class MenuDetailFragment extends Fragment {
 
         return sv;
     }
+
 }

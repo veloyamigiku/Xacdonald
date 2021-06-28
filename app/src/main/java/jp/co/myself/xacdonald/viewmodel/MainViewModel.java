@@ -1,19 +1,33 @@
 package jp.co.myself.xacdonald.viewmodel;
 
+import android.view.View;
+
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import jp.co.myself.xacdonald.model.view.common.DestinationBundle;
+
 public class MainViewModel extends ViewModel {
 
-    private Deque<Integer> destinationIDStack = null;
+    private Deque<DestinationBundle> destinationBundleStack = null;
+    private int bvnVisibleState = View.VISIBLE;
 
     MainViewModel() {
-        destinationIDStack = new ArrayDeque<>();
+        destinationBundleStack = new ArrayDeque<>();
     }
 
-    public Deque<Integer> getDestinationIDStack() {
-        return destinationIDStack;
+    public Deque<DestinationBundle> getDestinationBundleStack() {
+        return destinationBundleStack;
     }
+
+    public int getBvnVisibleState() {
+        return bvnVisibleState;
+    }
+
+    public void setBvnVisibleState(int bvnVisibleState) {
+        this.bvnVisibleState = bvnVisibleState;
+    }
+
 }

@@ -139,9 +139,4 @@ public class HomeFragment extends Fragment {
         return cl;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        cd.dispose();
-    }
 }
