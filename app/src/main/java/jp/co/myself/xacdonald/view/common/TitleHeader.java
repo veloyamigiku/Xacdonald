@@ -2,6 +2,7 @@ package jp.co.myself.xacdonald.view.common;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -71,8 +72,9 @@ public class TitleHeader extends ConstraintLayout {
 
         titleTv = new TextView(context);
         titleTv.setId(View.generateViewId());
-        titleTv.setLines(2);
+        titleTv.setLines(1);
         titleTv.setEllipsize(TextUtils.TruncateAt.END);
+        titleTv.setGravity(Gravity.CENTER_HORIZONTAL);
         addView(titleTv);
         ConstraintSet titleTvCs = new ConstraintSet();
         titleTvCs.constrainWidth(
@@ -83,12 +85,6 @@ public class TitleHeader extends ConstraintLayout {
                 ConstraintSet.WRAP_CONTENT);
         titleTvCs.connect(
                 titleTv.getId(),
-                ConstraintSet.TOP,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP,
-                DpPx.convertDp2Px(5, context));
-        titleTvCs.connect(
-                titleTv.getId(),
                 ConstraintSet.LEFT,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.LEFT,
@@ -99,12 +95,9 @@ public class TitleHeader extends ConstraintLayout {
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.RIGHT,
                 DpPx.convertDp2Px(LEFT_BUTTON_LEFT_MARGIN + LEFT_BUTTON_SIZE, context));
-        titleTvCs.connect(
+        titleTvCs.centerVertically(
                 titleTv.getId(),
-                ConstraintSet.BOTTOM,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.BOTTOM,
-                DpPx.convertDp2Px(5, context));
+                ConstraintSet.PARENT_ID);
         titleTvCs.applyTo(this);
 
     }
