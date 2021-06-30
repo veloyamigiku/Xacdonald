@@ -2,11 +2,15 @@ package jp.co.myself.xacdonald.model.webapi.common;
 
 public class WebAPIConstant {
 
-    public static final String YAHOO_API_BASE_URL = "https://shopping.yahooapis.jp";
+    public static final String YAHOO_SHOPPING_API_BASE_URL = "https://shopping.yahooapis.jp";
+
+    public static final String YAHOO_LOCAL_API_BASE_URL = "https://map.yahooapis.jp";
 
     public static final String ITEM_SEARCH_PATH = "ShoppingWebService/V3/itemSearch";
 
     public static final String KEYWORD_RANKING_PATH = "ShoppingWebService/V2/queryRanking";
+
+    public static final String LOCAL_SEARCH_PATH = "search/local/V1/localSearch";
 
     public static final String YAHOO_API_APP_ID = "dj00aiZpPWVheHgxT3VmSmp0eSZzPWNvbnN1bWVyc2VjcmV0Jng9YzU-";
 

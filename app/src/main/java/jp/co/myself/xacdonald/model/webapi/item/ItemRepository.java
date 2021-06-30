@@ -14,7 +14,7 @@ public class ItemRepository {
     private static ItemInterface createRepository() {
 
         Retrofit retro = new Retrofit.Builder()
-                .baseUrl(WebAPIConstant.YAHOO_API_BASE_URL)
+                .baseUrl(WebAPIConstant.YAHOO_SHOPPING_API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
