@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.utils.DpPx;
 
-public class TitleHeader extends ConstraintLayout {
+public class TitleSubHeader extends ConstraintLayout {
 
     public interface TitleHeaderDelegate {
         void tapLeftBtn();
@@ -27,7 +27,7 @@ public class TitleHeader extends ConstraintLayout {
     public TextView titleTv;
     public TextView subTitleTv;
 
-    public TitleHeader(@NonNull Context context) {
+    public TitleSubHeader(@NonNull Context context) {
         super(context);
 
         setId(View.generateViewId());
