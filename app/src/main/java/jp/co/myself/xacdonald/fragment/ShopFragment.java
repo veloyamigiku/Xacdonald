@@ -1,6 +1,11 @@
 package jp.co.myself.xacdonald.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +17,11 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
+import jp.co.myself.xacdonald.utils.DpPx;
 import jp.co.myself.xacdonald.utils.StringUtils;
+import jp.co.myself.xacdonald.view.common.TitleHeader;
 import jp.co.myself.xacdonald.view.shop.OrderMenuView;
 
 public class ShopFragment extends Fragment {
@@ -45,6 +53,57 @@ public class ShopFragment extends Fragment {
 
         ConstraintLayout cl = new ConstraintLayout(getContext());
 
+        TitleHeader th = new TitleHeader(getContext());
+        th.setId(View.generateViewId());
+        SpannableStringBuilder titleSsb = new SpannableStringBuilder();
+        titleSsb.append("どちらの店舗で受け取りますか");
+        titleSsb.setSpan(
+                new AbsoluteSizeSpan(16, true),
+                0,
+                titleSsb.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        titleSsb.setSpan(
+                new StyleSpan(Typeface.BOLD),
+                0,
+                titleSsb.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        th.titleTv.setText(titleSsb);
+        th.subTitleTv.setText("店舗によりお取り扱いの無い商品がある場合があります。");
+        th.setDelegate(new TitleHeader.TitleHeaderDelegate() {
+            @Override
+            public void tapLeftBtn() {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.popBackStackForFragment();
+            }
+        });
+        cl.addView(th);
+        ConstraintSet thCs = new ConstraintSet();
+        thCs.constrainWidth(
+                th.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        thCs.constrainHeight(
+                th.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP,
+                DpPx.convertDp2Px(0, getContext()));
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                DpPx.convertDp2Px(0, getContext()));
+        thCs.connect(
+                th.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                DpPx.convertDp2Px(0, getContext()));
+        thCs.applyTo(cl);
+
         OrderMenuView omv = new OrderMenuView(getContext());
         omv.setId(View.generateViewId());
         Glide
@@ -70,21 +129,21 @@ public class ShopFragment extends Fragment {
         omvCs.connect(
                 omv.getId(),
                 ConstraintSet.TOP,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP,
-                5);
+                th.getId(),
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
         omvCs.connect(
                 omv.getId(),
                 ConstraintSet.LEFT,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.LEFT,
-                5);
+                DpPx.convertDp2Px(5, getContext()));
         omvCs.connect(
                 omv.getId(),
                 ConstraintSet.RIGHT,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.RIGHT,
-                5);
+                DpPx.convertDp2Px(5, getContext()));
         omvCs.applyTo(cl);
 
         return cl;
