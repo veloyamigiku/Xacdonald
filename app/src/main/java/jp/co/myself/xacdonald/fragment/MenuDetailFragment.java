@@ -28,7 +28,8 @@ import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.utils.StringUtils;
-import jp.co.myself.xacdonald.view.common.TitleSubHeader;
+import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
+import jp.co.myself.xacdonald.view.common.TitleHeader;
 
 public class MenuDetailFragment extends Fragment {
 
@@ -65,7 +66,7 @@ public class MenuDetailFragment extends Fragment {
         ConstraintLayout cl = new ConstraintLayout(getContext());
         sv.addView(cl);
 
-        TitleSubHeader th = new TitleSubHeader(getContext());
+        TitleHeader th = new TitleHeader(getContext());
         th.setId(View.generateViewId());
         SpannableStringBuilder titleSsb = new SpannableStringBuilder();
         titleSsb.append(menuItem.getName());
@@ -80,7 +81,7 @@ public class MenuDetailFragment extends Fragment {
                 menuItem.getName().length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         th.titleTv.setText(titleSsb);
-        th.setDelegate(new TitleSubHeader.TitleHeaderDelegate() {
+        th.setDelegate(new BaseTitleHeader.TitleHeaderDelegate() {
             @Override
             public void tapLeftBtn() {
                 MainActivity mainActivity = (MainActivity) getActivity();

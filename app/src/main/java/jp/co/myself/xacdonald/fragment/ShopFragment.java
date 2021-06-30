@@ -21,6 +21,7 @@ import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.utils.DpPx;
 import jp.co.myself.xacdonald.utils.StringUtils;
+import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
 import jp.co.myself.xacdonald.view.common.TitleSubHeader;
 import jp.co.myself.xacdonald.view.shop.OrderMenuView;
 
@@ -69,7 +70,7 @@ public class ShopFragment extends Fragment {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         th.titleTv.setText(titleSsb);
         th.subTitleTv.setText("店舗によりお取り扱いの無い商品がある場合があります。");
-        th.setDelegate(new TitleSubHeader.TitleHeaderDelegate() {
+        th.setDelegate(new BaseTitleHeader.TitleHeaderDelegate() {
             @Override
             public void tapLeftBtn() {
                 MainActivity mainActivity = (MainActivity) getActivity();
