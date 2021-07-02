@@ -1,14 +1,24 @@
 package jp.co.myself.xacdonald.model.webapi.shop;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class Property {
 
+    @SerializedName("Address")
     private String address;
 
+    @SerializedName("Tel1")
     private String tel1;
 
-    private Station station;
+    @SerializedName("Station")
+    private List<Station> station;
 
-    public Property(String address, String tel1, Station station) {
+    public Property(
+            String address,
+            String tel1,
+            List<Station> station) {
         this.address = address;
         this.tel1 = tel1;
         this.station = station;
@@ -22,7 +32,7 @@ public class Property {
         return tel1;
     }
 
-    public Station getStation() {
+    public List<Station> getStation() {
         return station;
     }
 
