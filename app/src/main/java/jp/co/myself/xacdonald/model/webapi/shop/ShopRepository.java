@@ -16,7 +16,8 @@ public class ShopRepository {
                 lon,
                 "マクドナルド",
                 3,
-                "json");
+                "json",
+                "dist");
     }
 
 }

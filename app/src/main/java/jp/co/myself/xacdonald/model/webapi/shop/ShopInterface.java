@@ -14,5 +14,6 @@ public interface ShopInterface {
             @Query("lon") double lon,
             @Query("query") String query,
             @Query("dist") double dist,
-            @Query("output") String output);
+            @Query("output") String output,
+            @Query("sort") String sort);
 }
