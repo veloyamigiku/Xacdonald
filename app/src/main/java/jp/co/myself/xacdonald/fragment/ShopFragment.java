@@ -2,6 +2,7 @@ package jp.co.myself.xacdonald.fragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,18 +14,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -41,13 +50,17 @@ import jp.co.myself.xacdonald.view.shop.OrderMenuView;
 import jp.co.myself.xacdonald.viewmodel.ShopViewModel;
 import jp.co.myself.xacdonald.viewmodel.ShopViewModelFactory;
 
-public class ShopFragment extends Fragment {
+public class ShopFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int REQUSET_PERMISSION_CODE = 1;
 
     private MenuItem menuItem;
 
     private FusedLocationProviderClient fusedLocationClient;
+
+    private SupportMapFragment mapFragment;
+
+    private GoogleMap gm;
 
     public ShopFragment() {
         // Required empty public constructor
@@ -167,7 +180,45 @@ public class ShopFragment extends Fragment {
                 DpPx.convertDp2Px(5, getContext()));
         omvCs.applyTo(cl);
 
-        getLocation();
+        FrameLayout fl = new FrameLayout(getContext());
+        fl.setId(View.generateViewId());
+        fl.setBackgroundColor(Color.MAGENTA);
+        cl.addView(fl);
+        ConstraintSet flCs = new ConstraintSet();
+        flCs.constrainWidth(
+                fl.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        flCs.constrainPercentHeight(
+                fl.getId(),
+                0.4f);
+        flCs.connect(
+                fl.getId(),
+                ConstraintSet.TOP,
+                omv.getId(),
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        flCs.connect(
+                fl.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                0);
+        flCs.connect(
+                fl.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                0);
+        flCs.applyTo(cl);
+
+        mapFragment = SupportMapFragment.newInstance();
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(
+                fl.getId(),
+                mapFragment);
+        ft.commit();
+        mapFragment.getMapAsync(this);
 
         return cl;
     }
@@ -187,6 +238,7 @@ public class ShopFragment extends Fragment {
                     },
                     REQUSET_PERMISSION_CODE);
         } else {
+            gm.setMyLocationEnabled(true);
             fusedLocationClient
                     .getLastLocation()
                     .addOnFailureListener(
@@ -202,6 +254,11 @@ public class ShopFragment extends Fragment {
                             new OnSuccessListener<Location>() {
                                 @Override
                                 public void onSuccess(Location location) {
+                                    gm.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                            new LatLng(
+                                                    location.getLatitude(),
+                                                    location.getLongitude()),
+                                            16));
                                     ShopViewModel svm = new ViewModelProvider(getActivity(), new ShopViewModelFactory()).get(ShopViewModel.class);
                                     svm
                                             .getShop(
@@ -228,5 +285,12 @@ public class ShopFragment extends Fragment {
                 getLocation();
                 break;
         }
+    }
+
+
+    @Override
+    public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
+        gm = googleMap;
+        getLocation();
     }
 }
