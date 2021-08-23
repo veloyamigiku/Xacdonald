@@ -34,6 +34,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -42,6 +44,7 @@ import org.jetbrains.annotations.NotNull;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
+import jp.co.myself.xacdonald.model.view.shop.Shop;
 import jp.co.myself.xacdonald.utils.DpPx;
 import jp.co.myself.xacdonald.utils.StringUtils;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
@@ -268,6 +271,25 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
                                             .subscribe(
                                                     (shop) -> {
                                                         Log.d(ShopFragment.class.getSimpleName(), "Next");
+                                                        for (Shop s : shop) {
+                                                            gm.addMarker(new MarkerOptions()
+                                                                    .title(s.getName())
+                                                                    .snippet("店舗を選択してください")
+                                                                    .position(new LatLng(s.getLat(), s.getLon())));
+                                                            //gm.setInfoWindowAdapter();
+                                                            gm.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                                                @Override
+                                                                public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
+                                                                    return false;
+                                                                }
+                                                            });
+                                                            gm.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                                                @Override
+                                                                public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
+
+                                                                }
+                                                            });
+                                                        }
                                                     },
                                                     (error) -> {
                                                         Log.d(ShopFragment.class.getSimpleName(), error.getMessage());
