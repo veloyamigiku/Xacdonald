@@ -24,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -50,6 +52,7 @@ import jp.co.myself.xacdonald.utils.StringUtils;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
 import jp.co.myself.xacdonald.view.common.TitleSubHeader;
 import jp.co.myself.xacdonald.view.shop.OrderMenuView;
+import jp.co.myself.xacdonald.view.shop.ShopRecyclerViewAdapter;
 import jp.co.myself.xacdonald.viewmodel.ShopViewModel;
 import jp.co.myself.xacdonald.viewmodel.ShopViewModelFactory;
 
@@ -64,6 +67,8 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
 
     private GoogleMap gm;
+
+    private ShopRecyclerViewAdapter srva;
 
     public ShopFragment() {
         // Required empty public constructor
@@ -193,7 +198,7 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
                 ConstraintSet.MATCH_CONSTRAINT);
         flCs.constrainPercentHeight(
                 fl.getId(),
-                0.4f);
+                0.3f);
         flCs.connect(
                 fl.getId(),
                 ConstraintSet.TOP,
@@ -222,6 +227,46 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
                 mapFragment);
         ft.commit();
         mapFragment.getMapAsync(this);
+
+        RecyclerView rv = new RecyclerView(getContext());
+        rv.setId(View.generateViewId());
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setBackgroundColor(Color.BLUE);
+        srva = new ShopRecyclerViewAdapter();
+        rv.setAdapter(srva);
+        cl.addView(rv);
+        ConstraintSet rvCs = new ConstraintSet();
+        rvCs.constrainWidth(
+                rv.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        rvCs.constrainHeight(
+                rv.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.TOP,
+                fl.getId(),
+                ConstraintSet.BOTTOM,
+                0);
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                0);
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                0);
+        rvCs.connect(
+                rv.getId(),
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM,
+                0);
+        rvCs.applyTo(cl);
 
         return cl;
     }
@@ -290,6 +335,8 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
                                                                 }
                                                             });
                                                         }
+                                                        srva.setShopList(shop);
+                                                        srva.notifyDataSetChanged();
                                                     },
                                                     (error) -> {
                                                         Log.d(ShopFragment.class.getSimpleName(), error.getMessage());
