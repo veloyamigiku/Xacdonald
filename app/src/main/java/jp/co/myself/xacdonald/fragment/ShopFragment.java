@@ -231,7 +231,6 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
         RecyclerView rv = new RecyclerView(getContext());
         rv.setId(View.generateViewId());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setBackgroundColor(Color.BLUE);
         srva = new ShopRecyclerViewAdapter();
         rv.setAdapter(srva);
         cl.addView(rv);
