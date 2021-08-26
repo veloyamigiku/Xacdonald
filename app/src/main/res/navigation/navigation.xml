@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/HomeFragment">
 
@@ -37,7 +38,8 @@
     <custom_fragment
         android:id="@+id/MenuInfoDetailFragment"
         android:name="jp.co.myself.xacdonald.fragment.MenuInfoDetailFragment"
-        android:label="MenuInfoDetailFragment" >
+        android:label="MenuInfoDetailFragment"
+        tools:layout="@layout/fragment_menu_info_detail">
         <argument
             android:name="menuItem"
             app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
@@ -48,6 +50,18 @@
         android:label="ShopFragment" >
         <argument
             android:name="menuItem"
+            app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
+        <action
+            android:id="@+id/action_ShopFragment_to_MenuOrderFragment"
+            app:destination="@id/MenuOrderFragment" />
+    </custom_fragment>
+    <custom_fragment
+        android:id="@+id/MenuOrderFragment"
+        android:name="jp.co.myself.xacdonald.fragment.MenuOrderFragment"
+        android:label="MenuOrderFragment"
+        tools:layout="@layout/fragment_menu_order" >
+        <argument
+            android:name="sample"
             app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
     </custom_fragment>
 

@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -234,7 +235,13 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
         rv.setId(View.generateViewId());
         rv.setBackgroundColor(getResources().getColor(R.color.shop_item_background));
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        srva = new ShopRecyclerViewAdapter();
+        srva = new ShopRecyclerViewAdapter() {
+            @Override
+            public void onItemClick() {
+                ShopFragmentDirections.ActionShopFragmentToMenuOrderFragment directions = ShopFragmentDirections.actionShopFragmentToMenuOrderFragment(menuItem);
+                Navigation.findNavController(cl).navigate(directions);
+            }
+        };
         rv.setAdapter(srva);
         rv.addItemDecoration(new ShopItemDecoration(
                 DpPx.convertDp2Px(10, getContext()),

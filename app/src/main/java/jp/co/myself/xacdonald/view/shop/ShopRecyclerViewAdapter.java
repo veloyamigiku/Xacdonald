@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter {
         shopList = new ArrayList<>();
     }
 
+    public void onItemClick() {}
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,6 +36,12 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter {
         ShopItemViewHolder shopItemVh = new ShopItemViewHolder(
                 shopItemViewResult.getV(),
                 shopItemViewResult.getUiIdViewIdMap());
+        shopItemVh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClick();
+            }
+        });
         return shopItemVh;
     }
 
