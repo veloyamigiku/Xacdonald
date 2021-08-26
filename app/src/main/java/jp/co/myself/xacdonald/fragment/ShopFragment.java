@@ -44,6 +44,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.model.view.shop.Shop;
@@ -52,6 +53,7 @@ import jp.co.myself.xacdonald.utils.StringUtils;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
 import jp.co.myself.xacdonald.view.common.TitleSubHeader;
 import jp.co.myself.xacdonald.view.shop.OrderMenuView;
+import jp.co.myself.xacdonald.view.shop.ShopItemDecoration;
 import jp.co.myself.xacdonald.view.shop.ShopRecyclerViewAdapter;
 import jp.co.myself.xacdonald.viewmodel.ShopViewModel;
 import jp.co.myself.xacdonald.viewmodel.ShopViewModelFactory;
@@ -230,9 +232,15 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
 
         RecyclerView rv = new RecyclerView(getContext());
         rv.setId(View.generateViewId());
+        rv.setBackgroundColor(getResources().getColor(R.color.shop_item_background));
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         srva = new ShopRecyclerViewAdapter();
         rv.setAdapter(srva);
+        rv.addItemDecoration(new ShopItemDecoration(
+                DpPx.convertDp2Px(10, getContext()),
+                DpPx.convertDp2Px(10, getContext()),
+                DpPx.convertDp2Px(10, getContext()),
+                DpPx.convertDp2Px(10, getContext())));
         cl.addView(rv);
         ConstraintSet rvCs = new ConstraintSet();
         rvCs.constrainWidth(

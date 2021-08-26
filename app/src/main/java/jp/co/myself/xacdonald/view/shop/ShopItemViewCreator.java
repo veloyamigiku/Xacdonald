@@ -1,6 +1,8 @@
 package jp.co.myself.xacdonald.view.shop;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.utils.DpPx;
 import jp.co.myself.xacdonald.view.common.TableViewCreatorResult;
 
@@ -32,6 +35,13 @@ public class ShopItemViewCreator {
         cl.setLayoutParams(new ConstraintLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+        GradientDrawable gd = new GradientDrawable();
+        gd.setCornerRadius(DpPx.convertDp2Px(10, context));
+        gd.setColor(Color.WHITE);
+        gd.setStroke(
+                1,
+                context.getResources().getColor(R.color.shop_item_border));
+        cl.setBackground(gd);
 
 
         TextView statusTv = new TextView(context);
