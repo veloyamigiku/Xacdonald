@@ -1,26 +1,50 @@
 package jp.co.myself.xacdonald.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
+import jp.co.myself.xacdonald.model.webapi.common.WebAPIConstant;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
 import jp.co.myself.xacdonald.view.common.TitleHeader;
 import jp.co.myself.xacdonald.viewmodel.MenuOrderViewModel;
 import jp.co.myself.xacdonald.viewmodel.MenuOrderViewModelFactory;
 
 public class MenuOrderFragment extends Fragment {
+
+    private static final String[] MENU_ORDER_CATEGORY_LIST = {
+            WebAPIConstant.CATEGORY_FOOD,
+            WebAPIConstant.CATEGORY_DEVICE,
+            WebAPIConstant.CATEGORY_HOME_APPLIANCE,
+            WebAPIConstant.CATEGORY_FURNITURE,
+            WebAPIConstant.CATEGORY_BOOK,
+            WebAPIConstant.CATEGORY_SPORT,
+            WebAPIConstant.CATEGORY_GAME
+    };
+
+    private static final Integer[] MENU_ORDER_CATEGORY_ID_LIST = {
+            WebAPIConstant.CATEGORY_ID_FOOD,
+            WebAPIConstant.CATEGORY_ID_DEVICE,
+            WebAPIConstant.CATEGORY_ID_HOME_APPLIANCE,
+            WebAPIConstant.CATEGORY_ID_FURNITURE,
+            WebAPIConstant.CATEGORY_ID_BOOK,
+            WebAPIConstant.CATEGORY_ID_SPORT,
+            WebAPIConstant.CATEGORY_ID_GAME
+    };
 
     private MenuItem menuItem;
 
@@ -41,16 +65,6 @@ public class MenuOrderFragment extends Fragment {
         if (getArguments() != null) {
             menuItem = MenuOrderFragmentArgs.fromBundle(getArguments()).getSample();
         }
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -81,6 +95,32 @@ public class MenuOrderFragment extends Fragment {
                 mainActivity.popBackStackForFragment();
             }
         });
+
+        FragmentStateAdapter adapter = new FragmentStateAdapter(getActivity()) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                return MenuOrderCategoryFragment.newInstance();
+            }
+
+            @Override
+            public int getItemCount() {
+                return MENU_ORDER_CATEGORY_ID_LIST.length;
+            }
+        };
+
+        ViewPager2 vp = v.findViewById(R.id.menu_order_vp);
+        vp.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        vp.setAdapter(adapter);
+        vp.setOffscreenPageLimit(MENU_ORDER_CATEGORY_ID_LIST.length - 1);
+
+        TabLayout tl = v.findViewById(R.id.menu_order_tl);
+        new TabLayoutMediator(tl, vp, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                tab.setText(MENU_ORDER_CATEGORY_LIST[position]);
+            }
+        }).attach();
 
         return v;
     }
