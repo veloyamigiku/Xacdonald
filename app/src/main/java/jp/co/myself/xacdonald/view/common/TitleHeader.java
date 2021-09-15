@@ -2,11 +2,13 @@ package jp.co.myself.xacdonald.view.common;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import jp.co.myself.xacdonald.utils.DpPx;
@@ -15,8 +17,9 @@ public class TitleHeader extends BaseTitleHeader {
 
     public TextView titleTv;
 
-    public TitleHeader(@NonNull Context context) {
-        super(context);
+
+    public TitleHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
 
         titleTv = new TextView(context);
         titleTv.setId(View.generateViewId());

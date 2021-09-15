@@ -98,7 +98,7 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
 
         ConstraintLayout cl = new ConstraintLayout(getContext());
 
-        TitleSubHeader th = new TitleSubHeader(getContext());
+        TitleSubHeader th = new TitleSubHeader(getContext(), null);
         th.setId(View.generateViewId());
         SpannableStringBuilder titleSsb = new SpannableStringBuilder();
         titleSsb.append("どちらの店舗で受け取りますか");

@@ -66,7 +66,7 @@ public class MenuDetailFragment extends Fragment {
         ConstraintLayout cl = new ConstraintLayout(getContext());
         sv.addView(cl);
 
-        TitleHeader th = new TitleHeader(getContext());
+        TitleHeader th = new TitleHeader(getContext(), null);
         th.setId(View.generateViewId());
         SpannableStringBuilder titleSsb = new SpannableStringBuilder();
         titleSsb.append(menuItem.getName());

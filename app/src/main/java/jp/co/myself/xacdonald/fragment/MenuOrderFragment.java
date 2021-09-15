@@ -1,16 +1,22 @@
 package jp.co.myself.xacdonald.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import jp.co.myself.xacdonald.R;
+import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
+import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
+import jp.co.myself.xacdonald.view.common.TitleHeader;
 import jp.co.myself.xacdonald.viewmodel.MenuOrderViewModel;
 import jp.co.myself.xacdonald.viewmodel.MenuOrderViewModelFactory;
 
@@ -35,7 +41,21 @@ public class MenuOrderFragment extends Fragment {
         if (getArguments() != null) {
             menuItem = MenuOrderFragmentArgs.fromBundle(getArguments()).getSample();
         }
+    }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onPrimaryNavigationFragmentChanged(boolean isPrimaryNavigationFragment) {
+        super.onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment);
         // 画面回転等の再作成時に、メニューオーダ詳細画面への遷移を抑止する。
         MenuOrderViewModel mrvm = new ViewModelProvider(
                 this,
@@ -50,7 +70,19 @@ public class MenuOrderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_menu_order, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_menu_order, container, false);
+
+        TitleHeader th = v.findViewById(R.id.menu_order_th);
+        th.setDelegate(new BaseTitleHeader.TitleHeaderDelegate() {
+            @Override
+            public void tapLeftBtn() {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.popBackStackForFragment();
+            }
+        });
+
+        return v;
     }
 
 
