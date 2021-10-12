@@ -100,7 +100,7 @@ public class MenuOrderFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return MenuOrderCategoryFragment.newInstance();
+                return MenuOrderCategoryFragment.newInstance(MENU_ORDER_CATEGORY_ID_LIST[position]);
             }
 
             @Override
