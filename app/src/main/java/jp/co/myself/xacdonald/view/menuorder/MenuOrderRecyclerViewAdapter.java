@@ -1,6 +1,7 @@
 package jp.co.myself.xacdonald.view.menuorder;
 
 import android.text.SpannableStringBuilder;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ public class MenuOrderRecyclerViewAdapter extends RecyclerView.Adapter {
 
     private List<MenuBase> menuBaseList;
 
+    public void onItemClick(MenuBase menuBase) {}
+
     public MenuOrderRecyclerViewAdapter(List<MenuBase> menuBaseList) {
         this.menuBaseList = menuBaseList;
     }
@@ -46,6 +49,12 @@ public class MenuOrderRecyclerViewAdapter extends RecyclerView.Adapter {
                 MenuOrderItemViewHolder menuOrderItemVh = new MenuOrderItemViewHolder(
                         menuOrderItemTvcr.getV(),
                         menuOrderItemTvcr.getUiIdViewIdMap());
+                menuOrderItemVh.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onItemClick(menuBaseList.get(menuOrderItemVh.getAdapterPosition()));
+                    }
+                });
                 return menuOrderItemVh;
             default:
                 throw new RuntimeException(MenuOrderRecyclerViewAdapter.class.getSimpleName() + ":条件分岐の実装に問題があります。");

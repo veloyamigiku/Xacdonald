@@ -11,10 +11,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.model.view.menu.KeywordRanking;
 import jp.co.myself.xacdonald.model.view.menu.MenuBase;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
@@ -79,7 +81,14 @@ public class MenuOrderCategoryFragment extends Fragment {
         });
         rv.setLayoutManager(manager);
 
-        morva = new MenuOrderRecyclerViewAdapter(movm.getMenuBaseList());
+        morva = new MenuOrderRecyclerViewAdapter(movm.getMenuBaseList()) {
+            @Override
+            public void onItemClick(MenuBase menuBase) {
+                super.onItemClick(menuBase);
+                MenuOrderFragmentDirections.ActionMenuOrderFragmentToMenuOrderDetailFragment directions = MenuOrderFragmentDirections.actionMenuOrderFragmentToMenuOrderDetailFragment((MenuItem) menuBase);
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(directions);
+            }
+        };
         rv.setAdapter(morva);
         cl.addView(rv);
         ConstraintSet rvCs = new ConstraintSet();
