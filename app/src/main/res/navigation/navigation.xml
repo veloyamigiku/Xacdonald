@@ -59,13 +59,16 @@
         android:id="@+id/MenuOrderFragment"
         android:name="jp.co.myself.xacdonald.fragment.MenuOrderFragment"
         android:label="MenuOrderFragment"
-        tools:layout="@layout/fragment_menu_order" >
+        tools:layout="@layout/fragment_menu_order">
         <argument
-            android:name="sample"
+            android:name="menuItem"
             app:argType="jp.co.myself.xacdonald.model.view.menu.MenuItem" />
         <action
             android:id="@+id/action_MenuOrderFragment_to_menuOrderDetailFragment"
             app:destination="@id/MenuOrderDetailFragment" />
+        <argument
+            android:name="shop"
+            app:argType="jp.co.myself.xacdonald.model.view.shop.Shop" />
     </custom_fragment>
     <custom_fragment
         android:id="@+id/MenuOrderDetailFragment"

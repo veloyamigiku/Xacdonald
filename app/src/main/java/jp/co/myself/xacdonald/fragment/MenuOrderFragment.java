@@ -1,6 +1,11 @@
 package jp.co.myself.xacdonald.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
+import jp.co.myself.xacdonald.model.view.shop.Shop;
 import jp.co.myself.xacdonald.model.webapi.common.WebAPIConstant;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
 import jp.co.myself.xacdonald.view.common.TitleHeader;
@@ -48,6 +54,8 @@ public class MenuOrderFragment extends Fragment {
 
     private MenuItem menuItem;
 
+    private Shop shop;
+
     public MenuOrderFragment() {
         // Required empty public constructor
     }
@@ -63,7 +71,8 @@ public class MenuOrderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            menuItem = MenuOrderFragmentArgs.fromBundle(getArguments()).getSample();
+            menuItem = MenuOrderFragmentArgs.fromBundle(getArguments()).getMenuItem();
+            shop = MenuOrderFragmentArgs.fromBundle(getArguments()).getShop();
         }
     }
 
@@ -88,6 +97,19 @@ public class MenuOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_menu_order, container, false);
 
         TitleHeader th = v.findViewById(R.id.menu_order_th);
+        SpannableStringBuilder titleSsb = new SpannableStringBuilder();
+        titleSsb.append(shop.getName() + "で受け取り");
+        titleSsb.setSpan(
+                new AbsoluteSizeSpan(16, true),
+                0,
+                titleSsb.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        titleSsb.setSpan(
+                new StyleSpan(Typeface.BOLD),
+                0,
+                titleSsb.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        th.titleTv.setText(titleSsb);
         th.setDelegate(new BaseTitleHeader.TitleHeaderDelegate() {
             @Override
             public void tapLeftBtn() {

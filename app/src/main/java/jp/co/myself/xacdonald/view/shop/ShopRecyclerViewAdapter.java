@@ -27,7 +27,7 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter {
         shopList = new ArrayList<>();
     }
 
-    public void onItemClick() {}
+    public void onItemClick(Shop shop) {}
 
     @NonNull
     @Override
@@ -39,7 +39,7 @@ public class ShopRecyclerViewAdapter extends RecyclerView.Adapter {
         shopItemVh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick();
+                onItemClick(shopList.get(shopItemVh.getAdapterPosition()));
             }
         });
         return shopItemVh;

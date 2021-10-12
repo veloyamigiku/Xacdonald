@@ -237,8 +237,8 @@ public class ShopFragment extends Fragment implements OnMapReadyCallback {
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         srva = new ShopRecyclerViewAdapter() {
             @Override
-            public void onItemClick() {
-                ShopFragmentDirections.ActionShopFragmentToMenuOrderFragment directions = ShopFragmentDirections.actionShopFragmentToMenuOrderFragment(menuItem);
+            public void onItemClick(Shop shop) {
+                ShopFragmentDirections.ActionShopFragmentToMenuOrderFragment directions = ShopFragmentDirections.actionShopFragmentToMenuOrderFragment(menuItem, shop);
                 Navigation.findNavController(cl).navigate(directions);
             }
         };
