@@ -27,10 +27,13 @@ import jp.co.myself.xacdonald.utils.DpPx;
 import jp.co.myself.xacdonald.utils.StringUtils;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
 import jp.co.myself.xacdonald.view.common.TitleHeader;
+import jp.co.myself.xacdonald.view.menuorder.PlusMinusCounter;
 
-public class MenuOrderDetailFragment extends Fragment {
+public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounter.PlusMinusCounterDelegate {
 
     private MenuItem menuItem;
+
+    private TextView priceTv;
 
     public MenuOrderDetailFragment() {
         // Required empty public constructor
@@ -255,7 +258,7 @@ public class MenuOrderDetailFragment extends Fragment {
                 DpPx.convertDp2Px(5, getContext()));
         infoDetailTvCs.applyTo(svCl);
 
-        TextView priceTv = new TextView(getContext());
+        priceTv = new TextView(getContext());
         priceTv.setId(View.generateViewId());
         priceTv.setText(StringUtils.getPriceString(
                 13,
@@ -289,6 +292,55 @@ public class MenuOrderDetailFragment extends Fragment {
                 DpPx.convertDp2Px(5, getContext()));
         priceTvCs.applyTo(svCl);
 
+        PlusMinusCounter pmc = new PlusMinusCounter(getContext(), null);
+        pmc.setId(View.generateViewId());
+        pmc.setDelegate(this);
+        svCl.addView(pmc);
+        ConstraintSet pmcCs = new ConstraintSet();
+        pmcCs.constrainWidth(
+                pmc.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        pmcCs.constrainHeight(
+                pmc.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        pmcCs.connect(
+                pmc.getId(),
+                ConstraintSet.TOP,
+                infoDetailTv.getId(),
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        pmcCs.connect(
+                pmc.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                DpPx.convertDp2Px(5, getContext()));
+        pmcCs.connect(
+                pmc.getId(),
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        pmcCs.applyTo(svCl);
+
         return cl;
     }
+
+    private void setPrice(int price) {
+        priceTv.setText(StringUtils.getPriceString(
+                13,
+                23,
+                price));
+    }
+
+    @Override
+    public void tapPlusBtn(int count) {
+        setPrice(menuItem.getPrice() * count);
+    }
+
+    @Override
+    public void tapMinusBtn(int count) {
+        setPrice(menuItem.getPrice() * count);
+    }
+
 }
