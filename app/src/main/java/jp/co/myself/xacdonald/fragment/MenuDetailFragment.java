@@ -262,7 +262,7 @@ public class MenuDetailFragment extends Fragment {
         orderBtn.setId(View.generateViewId());
         orderBtn.setText("オーダーする");
         orderBtn.setPadding(40, 0, 40, 0);
-        orderBtn.setBackgroundResource(R.drawable.rounded_corners_button);
+        orderBtn.setBackgroundResource(R.drawable.rounded_corners_yellow_button);
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

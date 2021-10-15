@@ -10,6 +10,7 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.utils.DpPx;
@@ -322,6 +324,80 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 ConstraintSet.BOTTOM,
                 DpPx.convertDp2Px(5, getContext()));
         pmcCs.applyTo(svCl);
+
+        Button registerBtn = new Button(getContext());
+        registerBtn.setId(View.generateViewId());
+        registerBtn.setText("レジに進む");
+        registerBtn.setPadding(
+                DpPx.convertDp2Px(20, getContext()),
+                0,
+                DpPx.convertDp2Px(20, getContext()),
+                0);
+        registerBtn.setBackgroundResource(R.drawable.rounded_corners_white_button);
+        svCl.addView(registerBtn);
+        ConstraintSet registerBtnCs = new ConstraintSet();
+        registerBtnCs.constrainPercentWidth(
+                registerBtn.getId(),
+                0.48f);
+        registerBtnCs.constrainHeight(
+                registerBtn.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        registerBtnCs.connect(
+                registerBtn.getId(),
+                ConstraintSet.TOP,
+                priceTv.getId(),
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        registerBtnCs.connect(
+                registerBtn.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                DpPx.convertDp2Px(5, getContext()));
+        registerBtnCs.connect(
+                registerBtn.getId(),
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        registerBtnCs.applyTo(svCl);
+
+        Button cartButton = new Button(getContext());
+        cartButton.setId(View.generateViewId());
+        cartButton.setText("カートに追加");
+        cartButton.setPadding(
+                DpPx.convertDp2Px(20, getContext()),
+                0,
+                DpPx.convertDp2Px(20, getContext()),
+                0);
+        cartButton.setBackgroundResource(R.drawable.rounded_corners_yellow_button);
+        svCl.addView(cartButton);
+        ConstraintSet cartButtonCs = new ConstraintSet();
+        cartButtonCs.constrainPercentWidth(
+                cartButton.getId(),
+                0.48f);
+        cartButtonCs.constrainHeight(
+                cartButton.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        cartButtonCs.connect(
+                cartButton.getId(),
+                ConstraintSet.TOP,
+                priceTv.getId(),
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        cartButtonCs.connect(
+                cartButton.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                DpPx.convertDp2Px(5, getContext()));
+        cartButtonCs.connect(
+                cartButton.getId(),
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        cartButtonCs.applyTo(svCl);
 
         return cl;
     }
