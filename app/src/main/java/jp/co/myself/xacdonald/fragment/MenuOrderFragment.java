@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -31,6 +32,10 @@ import jp.co.myself.xacdonald.viewmodel.MenuOrderViewModel;
 import jp.co.myself.xacdonald.viewmodel.MenuOrderViewModelFactory;
 
 public class MenuOrderFragment extends Fragment {
+
+    public static final String MENU_ORDER_DETAIL_REQUEST = "menu_order_detail_request";
+
+    public static final String MENU_ORDER_DETAIL_REQUEST_MENU_ITEM = "menu_item";
 
     private static final String[] MENU_ORDER_CATEGORY_LIST = {
             WebAPIConstant.CATEGORY_FOOD,
@@ -74,20 +79,16 @@ public class MenuOrderFragment extends Fragment {
             menuItem = MenuOrderFragmentArgs.fromBundle(getArguments()).getMenuItem();
             shop = MenuOrderFragmentArgs.fromBundle(getArguments()).getShop();
         }
-    }
-
-    @Override
-    public void onPrimaryNavigationFragmentChanged(boolean isPrimaryNavigationFragment) {
-        super.onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment);
-        // 画面回転等の再作成時に、メニューオーダ詳細画面への遷移を抑止する。
-        MenuOrderViewModel mrvm = new ViewModelProvider(
+        getParentFragmentManager().setFragmentResultListener(
+                MENU_ORDER_DETAIL_REQUEST,
                 this,
-                new MenuOrderViewModelFactory(true)).get(MenuOrderViewModel.class);
-        if (mrvm.isFirstMoveWithMenuItem()) {
-            mrvm.setFirstMoveWithMenuItem(false);
-            MenuOrderFragmentDirections.ActionMenuOrderFragmentToMenuOrderDetailFragment directions = MenuOrderFragmentDirections.actionMenuOrderFragmentToMenuOrderDetailFragment(menuItem);
-            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(directions);
-        }
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        MenuItem menuOrderItem = (MenuItem) result.getSerializable(MENU_ORDER_DETAIL_REQUEST_MENU_ITEM);
+                    }
+                }
+        );
     }
 
     @Override
@@ -147,5 +148,17 @@ public class MenuOrderFragment extends Fragment {
         return v;
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 画面回転等の再作成時に、メニューオーダ詳細画面への遷移を抑止する。
+        MenuOrderViewModel mrvm = new ViewModelProvider(
+                this,
+                new MenuOrderViewModelFactory(true)).get(MenuOrderViewModel.class);
+        if (mrvm.isFirstMoveWithMenuItem()) {
+            mrvm.setFirstMoveWithMenuItem(false);
+            MenuOrderFragmentDirections.ActionMenuOrderFragmentToMenuOrderDetailFragment directions = MenuOrderFragmentDirections.actionMenuOrderFragmentToMenuOrderDetailFragment(menuItem);
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(directions);
+        }
+    }
 }

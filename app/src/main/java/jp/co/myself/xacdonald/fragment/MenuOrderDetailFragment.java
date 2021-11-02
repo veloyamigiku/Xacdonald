@@ -371,6 +371,20 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 DpPx.convertDp2Px(20, getContext()),
                 0);
         cartButton.setBackgroundResource(R.drawable.rounded_corners_yellow_button);
+        cartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.popBackStackForFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(
+                        MenuOrderFragment.MENU_ORDER_DETAIL_REQUEST_MENU_ITEM,
+                        menuItem);
+                getParentFragmentManager().setFragmentResult(
+                        MenuOrderFragment.MENU_ORDER_DETAIL_REQUEST,
+                        bundle);
+            }
+        });
         svCl.addView(cartButton);
         ConstraintSet cartButtonCs = new ConstraintSet();
         cartButtonCs.constrainPercentWidth(
