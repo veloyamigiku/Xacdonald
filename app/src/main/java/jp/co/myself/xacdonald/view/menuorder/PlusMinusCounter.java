@@ -190,4 +190,8 @@ public class PlusMinusCounter extends ConstraintLayout {
         this.delegate = delegate;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
 }

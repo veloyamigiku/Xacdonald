@@ -380,6 +380,8 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 bundle.putSerializable(
                         MenuOrderFragment.MENU_ORDER_DETAIL_REQUEST_MENU_ITEM,
                         menuItem);
+                bundle.putInt(MenuOrderFragment.MENU_ORDER_DETAIL_REQUEST_MENU_ITEM_COUNT,
+                        pmc.getCount());
                 getParentFragmentManager().setFragmentResult(
                         MenuOrderFragment.MENU_ORDER_DETAIL_REQUEST,
                         bundle);

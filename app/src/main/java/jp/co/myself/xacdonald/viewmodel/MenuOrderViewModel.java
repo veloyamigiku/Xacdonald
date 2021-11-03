@@ -12,6 +12,7 @@ import jp.co.myself.xacdonald.model.view.menu.KeywordRanking;
 import jp.co.myself.xacdonald.model.view.menu.MenuBase;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
 import jp.co.myself.xacdonald.model.view.menu.MenuItemWithKeywordRanking;
+import jp.co.myself.xacdonald.model.view.menuorder.MenuOrderManager;
 import jp.co.myself.xacdonald.model.webapi.item.ItemHit;
 import jp.co.myself.xacdonald.model.webapi.item.ItemRepository;
 import jp.co.myself.xacdonald.model.webapi.item.ItemWithRankingDataResult;
@@ -26,10 +27,13 @@ public class MenuOrderViewModel extends ViewModel {
 
     private List<MenuBase> menuBaseList;
 
+    private MenuOrderManager menuOrderManager;
+
     MenuOrderViewModel(boolean isFirstMoveWithMenuItem) {
         this.isFirstMoveWithMenuItem = isFirstMoveWithMenuItem;
         this.gotFirstMenu = false;
         this.menuBaseList = new ArrayList<>();
+        this.menuOrderManager = new MenuOrderManager();
     }
 
     public boolean isFirstMoveWithMenuItem() {
@@ -127,6 +131,10 @@ public class MenuOrderViewModel extends ViewModel {
 
     public List<MenuBase> getMenuBaseList() {
         return menuBaseList;
+    }
+
+    public MenuOrderManager getMenuOrderManager() {
+        return menuOrderManager;
     }
 
 }

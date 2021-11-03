@@ -24,6 +24,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.activity.MainActivity;
 import jp.co.myself.xacdonald.model.view.menu.MenuItem;
+import jp.co.myself.xacdonald.model.view.menuorder.MenuOrderManager;
 import jp.co.myself.xacdonald.model.view.shop.Shop;
 import jp.co.myself.xacdonald.model.webapi.common.WebAPIConstant;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
@@ -36,6 +37,8 @@ public class MenuOrderFragment extends Fragment {
     public static final String MENU_ORDER_DETAIL_REQUEST = "menu_order_detail_request";
 
     public static final String MENU_ORDER_DETAIL_REQUEST_MENU_ITEM = "menu_item";
+
+    public static final String MENU_ORDER_DETAIL_REQUEST_MENU_ITEM_COUNT = "menu_item_count";
 
     private static final String[] MENU_ORDER_CATEGORY_LIST = {
             WebAPIConstant.CATEGORY_FOOD,
@@ -85,7 +88,15 @@ public class MenuOrderFragment extends Fragment {
                 new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        MenuItem menuOrderItem = (MenuItem) result.getSerializable(MENU_ORDER_DETAIL_REQUEST_MENU_ITEM);
+                        MenuItem menuItem = (MenuItem) result.getSerializable(MENU_ORDER_DETAIL_REQUEST_MENU_ITEM);
+                        int menuItemCount = result.getInt(MENU_ORDER_DETAIL_REQUEST_MENU_ITEM_COUNT);
+                        MenuOrderViewModel movm = new ViewModelProvider(
+                                MenuOrderFragment.this,
+                                new MenuOrderViewModelFactory(true)).get(MenuOrderViewModel.class);
+                        MenuOrderManager mom = movm.getMenuOrderManager();
+                        mom.update(
+                                menuItem,
+                                menuItemCount);
                     }
                 }
         );

@@ -1,5 +1,12 @@
 package jp.co.myself.xacdonald.model.view.menu;
 
+import android.os.Build;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
+import java.util.Objects;
+
 public class MenuItem extends MenuBase {
 
     private String name;
@@ -141,4 +148,39 @@ public class MenuItem extends MenuBase {
         return sellerReviewCount;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+
+        boolean result = false;
+
+        if (obj instanceof MenuItem) {
+            MenuItem targetMenuItem = (MenuItem) obj;
+            if (name.equals(targetMenuItem.getName()) &&
+                    imgUrl.equals(targetMenuItem.getImgUrl()) &&
+                    price == targetMenuItem.getPrice()) {
+                result = true;
+            }
+        }
+
+        return result;
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        int code = Objects.hash(name, imgUrl, price);
+        return code;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("MenuItem[");
+        sb.append("name:" + name + "\n");
+        sb.append("imgUrl:" + imgUrl + "\n");
+        sb.append("price:" + price + "\n");
+        sb.append("]");
+        return sb.toString();
+    }
 }
