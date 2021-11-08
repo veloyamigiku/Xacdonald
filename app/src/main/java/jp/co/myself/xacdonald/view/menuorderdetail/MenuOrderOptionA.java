@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.transition.TransitionManager;
 
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.utils.DpPx;
@@ -21,6 +22,12 @@ public class MenuOrderOptionA extends ConstraintLayout {
     }
 
     private MenuOrderOptionADelegate delegate;
+
+    private ConstraintLayout bodyCl;
+
+    private ConstraintSet bodyClCs;
+
+    private Boolean bodyOpen;
 
     public MenuOrderOptionA(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -47,12 +54,6 @@ public class MenuOrderOptionA extends ConstraintLayout {
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.LEFT,
                 DpPx.convertDp2Px(5, context));
-        optionNameCs.connect(
-                optionName.getId(),
-                ConstraintSet.BOTTOM,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.BOTTOM,
-                DpPx.convertDp2Px(5, context));
         optionNameCs.applyTo(this);
 
         Button optionBtn = new Button(context);
@@ -69,6 +70,22 @@ public class MenuOrderOptionA extends ConstraintLayout {
             @Override
             public void onClick(View view) {
                 if (delegate != null) {
+
+                    if (bodyOpen) {
+                        bodyClCs.constrainHeight(
+                                bodyCl.getId(),
+                                0);
+                        bodyOpen = false;
+                    } else {
+                        bodyClCs.constrainHeight(
+                                bodyCl.getId(),
+                                ConstraintSet.WRAP_CONTENT);
+                        bodyOpen = true;
+                    }
+                    TransitionManager.beginDelayedTransition(MenuOrderOptionA.this);
+                    bodyClCs.applyTo(MenuOrderOptionA.this);
+
+
                     delegate.tapCustomizeBtn();
                 }
             }
@@ -93,13 +110,69 @@ public class MenuOrderOptionA extends ConstraintLayout {
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.RIGHT,
                 DpPx.convertDp2Px(5, context));
-        optionBtnCs.connect(
+        optionBtnCs.applyTo(this);
+
+        bodyOpen = true;
+        bodyCl = new ConstraintLayout(getContext());
+        bodyCl.setId(View.generateViewId());
+        addView(bodyCl);
+        bodyClCs = new ConstraintSet();
+        bodyClCs.constrainWidth(
+                bodyCl.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        bodyClCs.constrainHeight(
+                bodyCl.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        bodyClCs.connect(
+                bodyCl.getId(),
+                ConstraintSet.TOP,
                 optionBtn.getId(),
+                ConstraintSet.BOTTOM,
+                0);
+        bodyClCs.connect(
+                bodyCl.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                0);
+        bodyClCs.connect(
+                bodyCl.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                0);
+        bodyClCs.connect(
+                bodyCl.getId(),
                 ConstraintSet.BOTTOM,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.BOTTOM,
+                0);
+        bodyClCs.applyTo(this);
+
+        TextView bodyTextItem = new TextView(getContext());
+        bodyTextItem.setId(View.generateViewId());
+        bodyTextItem.setText("hogehoge");
+        bodyCl.addView(bodyTextItem);
+        ConstraintSet bodyTextItemCs = new ConstraintSet();
+        bodyTextItemCs.constrainWidth(
+                bodyTextItem.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        bodyTextItemCs.constrainHeight(
+                bodyTextItem.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        bodyTextItemCs.connect(
+                bodyTextItem.getId(),
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP,
                 DpPx.convertDp2Px(5, context));
-        optionBtnCs.applyTo(this);
+        bodyTextItemCs.connect(
+                bodyTextItem.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                DpPx.convertDp2Px(5, context));
+        bodyTextItemCs.applyTo(bodyCl);
 
     }
 
