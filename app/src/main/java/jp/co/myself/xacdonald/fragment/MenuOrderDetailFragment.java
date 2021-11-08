@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import jp.co.myself.xacdonald.utils.StringUtils;
 import jp.co.myself.xacdonald.view.common.BaseTitleHeader;
 import jp.co.myself.xacdonald.view.common.TitleHeader;
 import jp.co.myself.xacdonald.view.menuorder.PlusMinusCounter;
+import jp.co.myself.xacdonald.view.menuorderdetail.MenuOrderOptionA;
 
 public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounter.PlusMinusCounterDelegate {
 
@@ -260,6 +262,43 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 DpPx.convertDp2Px(5, getContext()));
         infoDetailTvCs.applyTo(svCl);
 
+        // ビュー（MenuOrderOptionA）を作成して配置する。※試験的に配置するため別途削除予定。
+        MenuOrderOptionA optA = new MenuOrderOptionA(getContext(), null);
+        optA.setId(View.generateViewId());
+        optA.setDelegate(new MenuOrderOptionA.MenuOrderOptionADelegate() {
+            @Override
+            public void tapCustomizeBtn() {
+                Log.d(MenuOrderDetailFragment.class.getSimpleName(), "tapCustomizeBtn");
+            }
+        });
+        svCl.addView(optA);
+        ConstraintSet optACs = new ConstraintSet();
+        optACs.constrainWidth(
+                optA.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        optACs.constrainHeight(
+                optA.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        optACs.connect(
+                optA.getId(),
+                ConstraintSet.TOP,
+                infoDetailTv.getId(),
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(5, getContext()));
+        optACs.connect(
+                optA.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                DpPx.convertDp2Px(5, getContext()));
+        optACs.connect(
+                optA.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                DpPx.convertDp2Px(5, getContext()));
+        optACs.applyTo(svCl);
+
         priceTv = new TextView(getContext());
         priceTv.setId(View.generateViewId());
         priceTv.setText(StringUtils.getPriceString(
@@ -277,7 +316,7 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
         priceTvCs.connect(
                 priceTv.getId(),
                 ConstraintSet.TOP,
-                infoDetailTv.getId(),
+                optA.getId(),
                 ConstraintSet.BOTTOM,
                 DpPx.convertDp2Px(5, getContext()));
         priceTvCs.connect(
@@ -285,12 +324,6 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 ConstraintSet.LEFT,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.LEFT,
-                DpPx.convertDp2Px(5, getContext()));
-        priceTvCs.connect(
-                priceTv.getId(),
-                ConstraintSet.BOTTOM,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.BOTTOM,
                 DpPx.convertDp2Px(5, getContext()));
         priceTvCs.applyTo(svCl);
 
@@ -308,7 +341,7 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
         pmcCs.connect(
                 pmc.getId(),
                 ConstraintSet.TOP,
-                infoDetailTv.getId(),
+                optA.getId(),
                 ConstraintSet.BOTTOM,
                 DpPx.convertDp2Px(5, getContext()));
         pmcCs.connect(
@@ -316,12 +349,6 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 ConstraintSet.RIGHT,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.RIGHT,
-                DpPx.convertDp2Px(5, getContext()));
-        pmcCs.connect(
-                pmc.getId(),
-                ConstraintSet.BOTTOM,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.BOTTOM,
                 DpPx.convertDp2Px(5, getContext()));
         pmcCs.applyTo(svCl);
 
@@ -347,7 +374,7 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 ConstraintSet.TOP,
                 priceTv.getId(),
                 ConstraintSet.BOTTOM,
-                DpPx.convertDp2Px(5, getContext()));
+                DpPx.convertDp2Px(10, getContext()));
         registerBtnCs.connect(
                 registerBtn.getId(),
                 ConstraintSet.LEFT,
@@ -400,7 +427,7 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
                 ConstraintSet.TOP,
                 priceTv.getId(),
                 ConstraintSet.BOTTOM,
-                DpPx.convertDp2Px(5, getContext()));
+                DpPx.convertDp2Px(10, getContext()));
         cartButtonCs.connect(
                 cartButton.getId(),
                 ConstraintSet.RIGHT,
