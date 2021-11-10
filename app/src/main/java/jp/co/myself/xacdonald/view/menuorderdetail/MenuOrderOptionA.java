@@ -12,6 +12,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.transition.TransitionManager;
 
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayout;
+
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.utils.DpPx;
 
@@ -113,7 +117,7 @@ public class MenuOrderOptionA extends ConstraintLayout {
         optionBtnCs.applyTo(this);
 
         bodyOpen = true;
-        bodyCl = new ConstraintLayout(getContext());
+        bodyCl = new ConstraintLayout(context);
         bodyCl.setId(View.generateViewId());
         addView(bodyCl);
         bodyClCs = new ConstraintSet();
@@ -149,31 +153,58 @@ public class MenuOrderOptionA extends ConstraintLayout {
                 0);
         bodyClCs.applyTo(this);
 
-        TextView bodyTextItem = new TextView(getContext());
+        FlexboxLayout fbl = new FlexboxLayout(context);
+        fbl.setFlexDirection(FlexDirection.ROW);
+        fbl.setFlexWrap(FlexWrap.WRAP);
+        fbl.setId(View.generateViewId());
+        bodyCl.addView(fbl);
+        ConstraintSet fblCs = new ConstraintSet();
+        fblCs.constrainWidth(
+                fbl.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        fblCs.constrainHeight(
+                fbl.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        fblCs.connect(
+                fbl.getId(),
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP);
+        fblCs.connect(
+                fbl.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT);
+        fblCs.connect(
+                fbl.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT);
+        fblCs.connect(
+                fbl.getId(),
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM);
+        fblCs.applyTo(bodyCl);
+
+        addBodyTextItem(fbl, context);
+        addBodyTextItem(fbl, context);
+        addBodyTextItem(fbl, context);
+        addBodyTextItem(fbl, context);
+        addBodyTextItem(fbl, context);
+
+    }
+
+    private void addBodyTextItem(FlexboxLayout fbl, Context context) {
+        TextView bodyTextItem = new TextView(context);
         bodyTextItem.setId(View.generateViewId());
         bodyTextItem.setText("hogehoge");
-        bodyCl.addView(bodyTextItem);
-        ConstraintSet bodyTextItemCs = new ConstraintSet();
-        bodyTextItemCs.constrainWidth(
-                bodyTextItem.getId(),
-                ConstraintSet.WRAP_CONTENT);
-        bodyTextItemCs.constrainHeight(
-                bodyTextItem.getId(),
-                ConstraintSet.WRAP_CONTENT);
-        bodyTextItemCs.connect(
-                bodyTextItem.getId(),
-                ConstraintSet.TOP,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP,
-                DpPx.convertDp2Px(5, context));
-        bodyTextItemCs.connect(
-                bodyTextItem.getId(),
-                ConstraintSet.LEFT,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.LEFT,
-                DpPx.convertDp2Px(5, context));
-        bodyTextItemCs.applyTo(bodyCl);
-
+        FlexboxLayout.LayoutParams bodyTextItemLp = new FlexboxLayout.LayoutParams(
+                FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                FlexboxLayout.LayoutParams.WRAP_CONTENT);
+        bodyTextItemLp.setFlexBasisPercent(0.4f);
+        bodyTextItem.setLayoutParams(bodyTextItemLp);
+        fbl.addView(bodyTextItem);
     }
 
     public void setDelegate(MenuOrderOptionADelegate delegate) {
