@@ -1,6 +1,5 @@
 package jp.co.myself.xacdonald.fragment;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
@@ -116,7 +115,6 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
 
         ScrollView sv = new ScrollView(getContext());
         sv.setId(View.generateViewId());
-        sv.setBackgroundColor(Color.CYAN);
         cl.addView(sv);
         ConstraintSet svCs = new ConstraintSet();
         svCs.constrainWidth(
@@ -153,7 +151,6 @@ public class MenuOrderDetailFragment extends Fragment implements PlusMinusCounte
 
         ConstraintLayout svCl = new ConstraintLayout(getContext());
         svCl.setId(View.generateViewId());
-        svCl.setBackgroundColor(Color.MAGENTA);
         sv.addView(svCl);
         ConstraintSet svClCs = new ConstraintSet();
         svClCs.constrainWidth(

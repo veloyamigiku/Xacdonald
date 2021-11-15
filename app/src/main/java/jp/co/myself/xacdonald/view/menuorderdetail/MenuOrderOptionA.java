@@ -1,6 +1,8 @@
 package jp.co.myself.xacdonald.view.menuorderdetail;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import androidx.transition.TransitionManager;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.flexbox.JustifyContent;
 
 import jp.co.myself.xacdonald.R;
 import jp.co.myself.xacdonald.utils.DpPx;
@@ -153,10 +156,25 @@ public class MenuOrderOptionA extends ConstraintLayout {
                 0);
         bodyClCs.applyTo(this);
 
+
+        GradientDrawable shape = new GradientDrawable();
+        shape.setSize(
+                DpPx.convertDp2Px(10, context),
+                DpPx.convertDp2Px(10, context));
+        shape.setColor(Color.GREEN);
+
+
         FlexboxLayout fbl = new FlexboxLayout(context);
+        fbl.setId(View.generateViewId());
         fbl.setFlexDirection(FlexDirection.ROW);
         fbl.setFlexWrap(FlexWrap.WRAP);
-        fbl.setId(View.generateViewId());
+        fbl.setJustifyContent(JustifyContent.SPACE_BETWEEN);
+        fbl.setBackgroundColor(Color.GREEN);
+        fbl.setDividerDrawable(shape);
+        fbl.setShowDivider(
+                FlexboxLayout.SHOW_DIVIDER_BEGINNING |
+                        FlexboxLayout.SHOW_DIVIDER_MIDDLE |
+                        FlexboxLayout.SHOW_DIVIDER_END);
         bodyCl.addView(fbl);
         ConstraintSet fblCs = new ConstraintSet();
         fblCs.constrainWidth(
@@ -187,6 +205,7 @@ public class MenuOrderOptionA extends ConstraintLayout {
                 ConstraintSet.BOTTOM);
         fblCs.applyTo(bodyCl);
 
+
         addBodyTextItem(fbl, context);
         addBodyTextItem(fbl, context);
         addBodyTextItem(fbl, context);
@@ -199,10 +218,11 @@ public class MenuOrderOptionA extends ConstraintLayout {
         TextView bodyTextItem = new TextView(context);
         bodyTextItem.setId(View.generateViewId());
         bodyTextItem.setText("hogehoge");
+        bodyTextItem.setBackgroundColor(Color.CYAN);
         FlexboxLayout.LayoutParams bodyTextItemLp = new FlexboxLayout.LayoutParams(
                 FlexboxLayout.LayoutParams.WRAP_CONTENT,
                 FlexboxLayout.LayoutParams.WRAP_CONTENT);
-        bodyTextItemLp.setFlexBasisPercent(0.4f);
+        bodyTextItemLp.setFlexBasisPercent(0.45f);
         bodyTextItem.setLayoutParams(bodyTextItemLp);
         fbl.addView(bodyTextItem);
     }
