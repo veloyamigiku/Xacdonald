@@ -3,7 +3,6 @@ package jp.co.myself.xacdonald.view.menuorder;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,16 +16,17 @@ import jp.co.myself.xacdonald.utils.DpPx;
 
 public class MenuOrderBottomView extends ConstraintLayout implements View.OnTouchListener {
 
+    private final int HEIGHT_DP_MAX = DpPx.convertDp2Px(150, getContext());
+    private final int HEIGHT_DP_TAP_MAX = DpPx.convertDp2Px(149, getContext());
+    private final int HEIGHT_DP_THRESHOLD = DpPx.convertDp2Px(100, getContext());
+    private final int HEIGHT_DP_MIN = DpPx.convertDp2Px(50, getContext());
+    private final int HEIGHT_DP_TAP_MIN = DpPx.convertDp2Px(51, getContext());
+
     private ConstraintSet vCs;
     private View v;
     private int vHeightDp = DpPx.convertDp2Px(50, getContext());
-    private final int vHeightDpMax = DpPx.convertDp2Px(150, getContext());
-    private final int vHeightDpTapMax = DpPx.convertDp2Px(140, getContext());
-    private final int vHeightDpThres = DpPx.convertDp2Px(100, getContext());
-    private final int vHeightDpMin = DpPx.convertDp2Px(50, getContext());
-    private final int vHeightDpTapMin = DpPx.convertDp2Px(60, getContext());
-    private int pressedx;
-    private int pressedy;
+    private boolean vOpenFlg = false;
+    private int pressedY;
 
     public MenuOrderBottomView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -50,40 +50,45 @@ public class MenuOrderBottomView extends ConstraintLayout implements View.OnTouc
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        int currentx = (int) motionEvent.getRawX();
-        int currenty = (int) motionEvent.getRawY();
-
+        int currentY = (int) motionEvent.getRawY();
+        int diffY;
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.d(MenuOrderBottomView.class.getSimpleName(), "Down");
-                pressedx = currentx;
-                pressedy = currenty;
+                pressedY = currentY;
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.d(MenuOrderBottomView.class.getSimpleName(), "Move");
-                int diffx = currentx - pressedx;
-                int diffy = currenty - pressedy;
-                pressedx = currentx;
-                pressedy = currenty;
+                diffY = currentY - pressedY;
+                pressedY = currentY;
 
-                vHeightDp -= diffy;
+                vHeightDp -= diffY;
                 vCs.constrainHeight(
                         v.getId(),
                         vHeightDp);
                 vCs.applyTo(this);
 
-                Log.d(MenuOrderBottomView.class.getSimpleName(), diffx + "," + diffy);
                 break;
             case MotionEvent.ACTION_UP:
-                Log.d(MenuOrderBottomView.class.getSimpleName(), "Up");
-                int diffx2 = currentx - pressedx;
-                int diffy2 = currenty - pressedy;
+                diffY = currentY - pressedY;
 
-                vHeightDp -= diffy2;
-                if (vHeightDp > vHeightDpThres) {
-                    vHeightDp = vHeightDpMax;
+                vHeightDp -= diffY;
+
+                if (vOpenFlg && vHeightDp > HEIGHT_DP_TAP_MAX) {
+                    // 本ビューが開いている状態で、タップされた場合。
+                    vHeightDp = HEIGHT_DP_MIN;
+                    vOpenFlg = false;
+                } else if (!vOpenFlg && vHeightDp < HEIGHT_DP_TAP_MIN) {
+                    // 本ビューが閉じている状態で、タップされた場合。
+                    vHeightDp = HEIGHT_DP_MAX;
+                    vOpenFlg = true;
                 } else {
-                    vHeightDp = vHeightDpMin;
+                    // 本ビューがスライドされている場合。
+                    if (vHeightDp > HEIGHT_DP_THRESHOLD) {
+                        vHeightDp = HEIGHT_DP_MAX;
+                        vOpenFlg = true;
+                    } else {
+                        vHeightDp = HEIGHT_DP_MIN;
+                        vOpenFlg = false;
+                    }
                 }
                 vCs.constrainHeight(
                         v.getId(),
@@ -91,7 +96,6 @@ public class MenuOrderBottomView extends ConstraintLayout implements View.OnTouc
                 TransitionManager.beginDelayedTransition(this);
                 vCs.applyTo(this);
 
-                Log.d(MenuOrderBottomView.class.getSimpleName(), diffx2 + "," + diffy2);
                 break;
         }
         return true;
