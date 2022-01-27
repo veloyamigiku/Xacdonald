@@ -3,8 +3,10 @@ package jp.co.myself.xacdonald.view.menuorder;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,15 +18,15 @@ import jp.co.myself.xacdonald.utils.DpPx;
 
 public class MenuOrderBottomView extends ConstraintLayout implements View.OnTouchListener {
 
-    private final int HEIGHT_DP_MAX = DpPx.convertDp2Px(150, getContext());
-    private final int HEIGHT_DP_TAP_MAX = DpPx.convertDp2Px(149, getContext());
-    private final int HEIGHT_DP_THRESHOLD = DpPx.convertDp2Px(100, getContext());
-    private final int HEIGHT_DP_MIN = DpPx.convertDp2Px(50, getContext());
-    private final int HEIGHT_DP_TAP_MIN = DpPx.convertDp2Px(51, getContext());
+    private final int HEIGHT_DP_MAX = DpPx.convertDp2Px(100, getContext());
+    private final int HEIGHT_DP_TAP_MAX = DpPx.convertDp2Px(99, getContext());
+    private final int HEIGHT_DP_THRESHOLD = DpPx.convertDp2Px(50, getContext());
+    private final int HEIGHT_DP_MIN = DpPx.convertDp2Px(0, getContext());
+    private final int HEIGHT_DP_TAP_MIN = DpPx.convertDp2Px(1, getContext());
 
-    private ConstraintSet vCs;
-    private View v;
-    private int vHeightDp = DpPx.convertDp2Px(50, getContext());
+    private ConstraintSet cl1Cs;
+    private ConstraintLayout cl1;
+    private int vHeightDp = DpPx.convertDp2Px(0, getContext());
     private boolean vOpenFlg = false;
     private int pressedY;
 
@@ -32,20 +34,100 @@ public class MenuOrderBottomView extends ConstraintLayout implements View.OnTouc
         super(context, attrs);
 
         setBackgroundColor(Color.GRAY);
-
-        v = new View(context);
-        v.setId(View.generateViewId());
-        v.setBackgroundColor(Color.MAGENTA);
-        addView(v);
-        vCs = new ConstraintSet();
-        vCs.constrainWidth(
-                v.getId(),
-                ConstraintSet.MATCH_CONSTRAINT);
-        vCs.constrainHeight(
-                v.getId(),
-                vHeightDp);
-        vCs.applyTo(this);
         setOnTouchListener(this);
+
+        cl1 = new ConstraintLayout(getContext(), null);
+        cl1.setId(View.generateViewId());
+        cl1.setBackgroundColor(Color.BLUE);
+        addView(cl1);
+        cl1Cs = new ConstraintSet();
+        cl1Cs.constrainWidth(
+                cl1.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        cl1Cs.constrainHeight(
+                cl1.getId(),
+                vHeightDp);
+        cl1Cs.connect(
+                cl1.getId(),
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP,
+                DpPx.convertDp2Px(0, getContext()));
+        cl1Cs.connect(
+                cl1.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                DpPx.convertDp2Px(0, getContext()));
+        cl1Cs.connect(
+                cl1.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                DpPx.convertDp2Px(0, getContext()));
+        cl1Cs.applyTo(this);
+        Button sampleBtn = new Button(getContext());
+        sampleBtn.setId(View.generateViewId());
+        sampleBtn.setText("sample");
+        sampleBtn.setBackgroundColor(Color.GRAY);
+        sampleBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(MenuOrderBottomView.class.getSimpleName(), "sampleBtn clicked.");
+            }
+        });
+        cl1.addView(sampleBtn);
+        ConstraintSet sampleBtnCs = new ConstraintSet();
+        sampleBtnCs.constrainWidth(
+                sampleBtn.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        sampleBtnCs.constrainHeight(
+                sampleBtn.getId(),
+                ConstraintSet.WRAP_CONTENT);
+        sampleBtnCs.centerHorizontally(
+                sampleBtn.getId(),
+                ConstraintSet.PARENT_ID);
+        sampleBtnCs.centerVertically(
+                sampleBtn.getId(),
+                ConstraintSet.PARENT_ID);
+        sampleBtnCs.applyTo(cl1);
+
+        ConstraintLayout cl2 = new ConstraintLayout(getContext(), null);
+        cl2.setId(View.generateViewId());
+        cl2.setBackgroundColor(Color.GREEN);
+        addView(cl2);
+        ConstraintSet cl2Cs = new ConstraintSet();
+        cl2Cs.constrainWidth(
+                cl2.getId(),
+                ConstraintSet.MATCH_CONSTRAINT);
+        cl2Cs.constrainHeight(
+                cl2.getId(),
+                DpPx.convertDp2Px(50, getContext()));
+        cl2Cs.connect(
+                cl2.getId(),
+                ConstraintSet.TOP,
+                cl1.getId(),
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(0, getContext()));
+        cl2Cs.connect(
+                cl2.getId(),
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                DpPx.convertDp2Px(0, getContext()));
+        cl2Cs.connect(
+                cl2.getId(),
+                ConstraintSet.RIGHT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.RIGHT,
+                DpPx.convertDp2Px(0, getContext()));
+        cl2Cs.connect(
+                cl2.getId(),
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM,
+                DpPx.convertDp2Px(0, getContext()));
+        cl2Cs.applyTo(this);
     }
 
     @Override
@@ -60,11 +142,14 @@ public class MenuOrderBottomView extends ConstraintLayout implements View.OnTouc
                 diffY = currentY - pressedY;
                 pressedY = currentY;
 
+                if (vHeightDp - diffY > HEIGHT_DP_MAX) {
+                    break;
+                }
                 vHeightDp -= diffY;
-                vCs.constrainHeight(
-                        v.getId(),
+                cl1Cs.constrainHeight(
+                        cl1.getId(),
                         vHeightDp);
-                vCs.applyTo(this);
+                cl1Cs.applyTo(this);
 
                 break;
             case MotionEvent.ACTION_UP:
@@ -90,11 +175,11 @@ public class MenuOrderBottomView extends ConstraintLayout implements View.OnTouc
                         vOpenFlg = false;
                     }
                 }
-                vCs.constrainHeight(
-                        v.getId(),
+                cl1Cs.constrainHeight(
+                        cl1.getId(),
                         vHeightDp);
                 TransitionManager.beginDelayedTransition(this);
-                vCs.applyTo(this);
+                cl1Cs.applyTo(this);
 
                 break;
         }
